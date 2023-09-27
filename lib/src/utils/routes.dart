@@ -2,8 +2,9 @@ class Routes {
   static const String initial = '/';
   static const String introduction = '/introduction';
   static const String login = '/login';
-  static const String loginSuccessful = '/login-successful';
+  static const String loginSuccessful = 'login-successful';
   static const String registration = '/registration';
+  static const String registrationSuccessful = 'registration-succesful';
   static const String phoneVerification = '/phone-verification';
   static const String home = '/home';
   static const String restaurantList = '/restaurant-list';

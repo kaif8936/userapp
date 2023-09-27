@@ -8,16 +8,17 @@ import 'package:userapp/src/widgets/button.dart';
 import 'package:userapp/src/widgets/custom_form_field.dart';
 
 // ignore: must_be_immutable
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController repeatPasswordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -32,16 +33,17 @@ class _LoginScreenState extends State<LoginScreen> {
     emailController.dispose();
     passwordController.dispose();
     _imageFocusNode.dispose();
-    // emailFocusNode.dispose(); // Dispose of FocusNode
-    // passwordFocusNode.dispose();
+
     super.dispose();
   }
 
   void _validateForm() {
     final isEmailValid = emailController.text.isNotEmpty;
     final isPasswordValid = passwordController.text.length >= 6;
+    final doPasswordsMatch =
+        passwordController.text == repeatPasswordController.text;
     setState(() {
-      isButtonEnabled = isEmailValid && isPasswordValid;
+      isButtonEnabled = isEmailValid && isPasswordValid && doPasswordsMatch;
     });
   }
 
@@ -88,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 // "Sign in your account" text
                 Text(
-                  'Sign in your account',
+                  'Sign up your account',
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
@@ -153,6 +155,44 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   // If this is a password field
                 ),
+                const SizedBox(height: 10),
+                // Password text field
+                CustomTextFormField(
+                  controller:
+                      repeatPasswordController, // Pass the password controller
+                  labelText: 'Repeat Password',
+                  obscureText: !obscureText,
+                  label: 'Repeat Password',
+                  hint: '**********',
+                  // focusNode: passwordFocusNode,
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        obscureText = !obscureText;
+                      });
+                    },
+                    icon: Icon(
+                      obscureText ? Icons.visibility_off : Icons.visibility,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a password';
+                    } else if (value != passwordController.text) {
+                      return 'Passwords do not match';
+                    } else if (value.length < 6) {
+                      return 'Password should be at least 6 characters';
+                    }
+                    return null; // Return null if the input is valid
+                  },
+                  onFocusChange: (hasFocus) {
+                    setState(() {
+                      isFocused = hasFocus; // Update focus state
+                    });
+                  },
+                  // If this is a password field
+                ),
                 SizedBox(height: 27.h),
                 Button(
                   onTap: () async {
@@ -169,34 +209,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       // Navigate to the "LoginSuccessful" page
                       // ignore: use_build_context_synchronously
-                      context.push("${Routes.login}/${Routes.loginSuccessful}");
+                       context.push("${Routes.registration}/${Routes.registrationSuccessful}");
                     }
                   },
                   text: isLoading
                       ? 'LOADING....' // Show loading indicator
-                      : 'SIGN IN',
+                      : 'NEXT',
                   enabled: isButtonEnabled,
                 ),
                 SizedBox(height: 25.h),
-                // Forgot password
-                TextButton(
-                  onPressed: () {
-                    // Add forgot password logic here
-                  },
-                  child: Text(
-                    'Forgot password?',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.sp,
-                      color: const Color(0xff0D5EF9),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 25.h),
-                // Or continue with text
                 const Text('Or continue with'),
                 SizedBox(height: 25.h),
-                // Social login buttons (e.g., Facebook and Google)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -274,14 +297,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Don't have an account? Sign up
                 Text.rich(TextSpan(text: "Don't have an account? ", children: [
                   TextSpan(
-                    text: "Sign up",
+                    text: "Sign in",
                     style: const TextStyle(
                       color: Colors.blue,
                     ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        context.go(Routes.registration);
-                      },
+                    recognizer: TapGestureRecognizer()..onTap = () {},
                   ),
                 ]))
               ],
