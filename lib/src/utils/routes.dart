@@ -4,8 +4,8 @@ class Routes {
   static const String login = '/login';
   static const String loginSuccessful = 'login-successful';
   static const String registration = '/registration';
+  static const String bioScreen = '/bio-screen';
   static const String registrationSuccessful = '/registration-succesful';
-  static const String bioSuccessful = '/bio-succesful';
   static const String genderSelectionScreen = '/gender-selection-screen';
   static const String phoneVerification = '/phone-verification';
   static const String home = '/home';
