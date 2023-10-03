@@ -28,10 +28,9 @@ class MyApp extends StatelessWidget {
         builder: (context, child) {
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
-            title: 'Easy Wash Partner',
+            title: 'Food App',
             theme: ThemeData(
               textTheme: GoogleFonts.interTextTheme(),
-              // colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
               useMaterial3: true,
             ),
             routerConfig: router,

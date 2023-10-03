@@ -100,7 +100,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 // Email text field
                 CustomTextFormField(
                   controller: emailController,
-                  labelText: 'Email',
                   label: 'Email',
                   hint: 'Placeholder',
                   onFocusChange: (hasFocus) {
@@ -118,13 +117,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     return null; // Return null if the input is valid
                   },
+                  onTap: () {},
                 ),
                 const SizedBox(height: 10),
                 // Password text field
                 CustomTextFormField(
                   controller:
                       passwordController, // Pass the password controller
-                  labelText: 'Password',
                   obscureText: !obscureText,
                   label: 'Password',
                   hint: '**********',
@@ -153,6 +152,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       isFocused = hasFocus; // Update focus state
                     });
                   },
+                  onTap: () {},
                   // If this is a password field
                 ),
                 const SizedBox(height: 10),
@@ -160,7 +160,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 CustomTextFormField(
                   controller:
                       repeatPasswordController, // Pass the password controller
-                  labelText: 'Repeat Password',
                   obscureText: !obscureText,
                   label: 'Repeat Password',
                   hint: '**********',
@@ -191,6 +190,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       isFocused = hasFocus; // Update focus state
                     });
                   },
+                  onTap: () {},
                   // If this is a password field
                 ),
                 SizedBox(height: 27.h),
@@ -203,19 +203,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       // Delay for 3 seconds
                       await Future.delayed(const Duration(seconds: 3));
                       setState(() {
-                        isLoading = false; // Show loading indicator
+                        isLoading = false; // Hide the loading indicator
                       });
-                      // Hide the loading indicator
 
                       // Navigate to the "LoginSuccessful" page
                       // ignore: use_build_context_synchronously
-                       context.push("${Routes.registration}/${Routes.registrationSuccessful}");
+                      context.push(Routes.registrationSuccessful);
                     }
                   },
-                  text: isLoading
-                      ? 'LOADING....' // Show loading indicator
-                      : 'NEXT',
+                  text: 'NEXT',
                   enabled: isButtonEnabled,
+                  isLoading: isLoading, // Pass the isLoading property
                 ),
                 SizedBox(height: 25.h),
                 const Text('Or continue with'),

@@ -1,14 +1,15 @@
 import 'package:go_router/go_router.dart';
-import 'package:userapp/src/screens/auth/login_screen.dart';
-import 'package:userapp/src/screens/auth/login_successful_screen.dart';
+import 'package:userapp/src/screens/auth/bio_successful.dart';
+import 'package:userapp/src/screens/auth/login.dart';
+import 'package:userapp/src/screens/auth/login_successful.dart';
 import 'package:userapp/src/screens/auth/registration_screen.dart';
-import 'package:userapp/src/screens/auth/registration_successful_screen.dart';
+import 'package:userapp/src/screens/auth/registration_successful.dart';
 import 'package:userapp/src/screens/introduction/introduction_screen.dart';
 import 'package:userapp/src/screens/splash/splash_screen.dart';
 import 'package:userapp/src/utils/routes.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.login,
+  initialLocation: Routes.registrationSuccessful,
   routes: [
     GoRoute(
       path: Routes.initial,
@@ -29,14 +30,26 @@ final router = GoRouter(
       ],
     ),
     GoRoute(
+      path: Routes.registrationSuccessful,
+      builder: (context, state) => const RegistrationSuccessfull(),
+    ),
+    GoRoute(
       path: Routes.registration,
       builder: (context, state) => const RegistrationScreen(),
-      routes: [
-        GoRoute(
-          path: Routes.registrationSuccessful,
-          builder: (context, state) => const RegistrationSuccessfull(),
-        ),
+      routes: const [
+        // GoRoute(
+        //   path: Routes.registrationSuccessful,
+        //   builder: (context, state) => const RegistrationSuccessfull(),
+        // ),
       ],
+    ),
+    // GoRoute(
+    //   path: Routes.genderSelectionScreen,
+    //   builder: (context, state) => const GenderSelectionScreen(),
+    // ),
+    GoRoute(
+      path: Routes.bioSuccessful,
+      builder: (context, state) => const BioSuucesfull(),
     ),
   ],
 );

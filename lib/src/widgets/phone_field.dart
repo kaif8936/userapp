@@ -1,31 +1,24 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_field/phone_number.dart';
+
 import 'package:userapp/src/utils/app_colors.dart';
 
-class CustomTextFormField extends StatelessWidget {
+class CustomIntlPhoneField extends StatelessWidget {
   final String label;
   final TextEditingController controller;
-  final bool obscureText;
-  final bool autofocus;
-  final String? hint;
-  final TextInputType? keyboardType;
   final String? Function(String?)? validator;
-  final IconButton? suffixIcon;
-  final Function(bool hasFocus) onFocusChange;
-  final VoidCallback onTap;
-
-  const CustomTextFormField({
+  final void Function(PhoneNumber?)? onPhoneNumberChanged;
+  final String initialCountryCode;
+  const CustomIntlPhoneField({
     Key? key,
-    required this.onTap,
-    required this.onFocusChange,
-    this.validator,
     required this.label,
     required this.controller,
-    this.obscureText = false,
-    this.autofocus = false,
-    required this.hint,
-    this.keyboardType,
-    this.suffixIcon,
+    this.validator,
+    required this.onPhoneNumberChanged,
+    required this.initialCountryCode,
   }) : super(key: key);
 
   @override
@@ -42,26 +35,14 @@ class CustomTextFormField extends StatelessWidget {
           ),
         ),
         SizedBox(height: 10.h),
-        TextFormField(
-          onTap: () {
-            onFocusChange(true); // Notify that the TextFormField is focused
-          },
-          onEditingComplete: () {
-            onFocusChange(false);
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
-          validator: validator,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          autofocus: autofocus,
-          controller: controller,
-          obscureText: obscureText,
+        IntlPhoneField(
           decoration: InputDecoration(
             filled: true,
             fillColor: const Color(0xffF2F2F2),
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
             isDense: true,
-            hintText: hint,
+            hintText: label,
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
               borderSide: BorderSide(
@@ -89,8 +70,9 @@ class CustomTextFormField extends StatelessWidget {
                 width: 1.0,
               ),
             ),
-            suffixIcon: suffixIcon,
           ),
+          initialCountryCode: initialCountryCode,
+          onChanged: onPhoneNumberChanged,
         ),
         SizedBox(height: 10.h),
       ],

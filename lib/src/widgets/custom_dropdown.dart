@@ -2,30 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:userapp/src/utils/app_colors.dart';
 
-class CustomTextFormField extends StatelessWidget {
+class CustomDropdownFormField<T> extends StatelessWidget {
   final String label;
-  final TextEditingController controller;
-  final bool obscureText;
-  final bool autofocus;
+  final T? value;
+  final List<DropdownMenuItem<T>> items;
+  final ValueChanged<T?> onChanged;
+  final String? Function(T?)? validator;
   final String? hint;
-  final TextInputType? keyboardType;
-  final String? Function(String?)? validator;
-  final IconButton? suffixIcon;
-  final Function(bool hasFocus) onFocusChange;
-  final VoidCallback onTap;
 
-  const CustomTextFormField({
+  const CustomDropdownFormField({
     Key? key,
-    required this.onTap,
-    required this.onFocusChange,
-    this.validator,
     required this.label,
-    required this.controller,
-    this.obscureText = false,
-    this.autofocus = false,
-    required this.hint,
-    this.keyboardType,
-    this.suffixIcon,
+    required this.value,
+    required this.items,
+    required this.onChanged,
+    this.validator,
+    this.hint,
   }) : super(key: key);
 
   @override
@@ -42,19 +34,12 @@ class CustomTextFormField extends StatelessWidget {
           ),
         ),
         SizedBox(height: 10.h),
-        TextFormField(
-          onTap: () {
-            onFocusChange(true); // Notify that the TextFormField is focused
-          },
-          onEditingComplete: () {
-            onFocusChange(false);
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
+        DropdownButtonFormField<T>(
+          value: value,
+          items: items,
+          onChanged: onChanged,
           validator: validator,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          autofocus: autofocus,
-          controller: controller,
-          obscureText: obscureText,
+          isDense: true,
           decoration: InputDecoration(
             filled: true,
             fillColor: const Color(0xffF2F2F2),
@@ -89,7 +74,6 @@ class CustomTextFormField extends StatelessWidget {
                 width: 1.0,
               ),
             ),
-            suffixIcon: suffixIcon,
           ),
         ),
         SizedBox(height: 10.h),

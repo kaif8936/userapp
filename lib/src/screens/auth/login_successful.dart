@@ -11,12 +11,10 @@ class LoginSuccessful extends StatelessWidget {
       appBar: AppBar(
         leadingWidth: 90.w,
         toolbarHeight: 85.h,
-        // backgroundColor: Colors.amber,
         leading: Padding(
           padding: EdgeInsets.only(left: 24.sp, top: 12.sp, bottom: 12.sp),
           child: const CustomBackButton(),
         ),
-
         title: Text(
           'Fill in all fields',
           style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),

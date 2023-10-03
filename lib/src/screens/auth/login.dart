@@ -32,8 +32,6 @@ class _LoginScreenState extends State<LoginScreen> {
     emailController.dispose();
     passwordController.dispose();
     _imageFocusNode.dispose();
-    // emailFocusNode.dispose(); // Dispose of FocusNode
-    // passwordFocusNode.dispose();
     super.dispose();
   }
 
@@ -83,10 +81,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 AnimatedContainer(
                   duration: const Duration(
                       milliseconds: 500), // Adjust the duration as needed
-                  // width: isFocused ? 100.0 : 80.0, // Change size when focused
                   height: isFocused ? 10.0 : 30.0,
                 ),
-                // "Sign in your account" text
                 Text(
                   'Sign in your account',
                   style: TextStyle(
@@ -95,10 +91,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                // Email text field
                 CustomTextFormField(
                   controller: emailController,
-                  labelText: 'Email',
                   label: 'Email',
                   hint: 'Placeholder',
                   onFocusChange: (hasFocus) {
@@ -115,18 +109,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
 
                     return null; // Return null if the input is valid
-                  },
+                  }, onTap: () {  },
                 ),
                 const SizedBox(height: 10),
                 // Password text field
                 CustomTextFormField(
                   controller:
                       passwordController, // Pass the password controller
-                  labelText: 'Password',
                   obscureText: !obscureText,
                   label: 'Password',
                   hint: '**********',
-                  // focusNode: passwordFocusNode,
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
@@ -150,8 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     setState(() {
                       isFocused = hasFocus; // Update focus state
                     });
-                  },
-                  // If this is a password field
+                  }, onTap: () {  },
                 ),
                 SizedBox(height: 27.h),
                 Button(
@@ -160,28 +151,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       setState(() {
                         isLoading = true; // Show loading indicator
                       });
-                      // Delay for 3 seconds
                       await Future.delayed(const Duration(seconds: 3));
                       setState(() {
                         isLoading = false; // Show loading indicator
                       });
-                      // Hide the loading indicator
-
-                      // Navigate to the "LoginSuccessful" page
                       // ignore: use_build_context_synchronously
                       context.push("${Routes.login}/${Routes.loginSuccessful}");
                     }
                   },
-                  text: isLoading
-                      ? 'LOADING....' // Show loading indicator
-                      : 'SIGN IN',
+                  text: 'SIGN IN',
                   enabled: isButtonEnabled,
                 ),
                 SizedBox(height: 25.h),
-                // Forgot password
                 TextButton(
                   onPressed: () {
-                    // Add forgot password logic here
                   },
                   child: Text(
                     'Forgot password?',
@@ -193,10 +176,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(height: 25.h),
-                // Or continue with text
                 const Text('Or continue with'),
                 SizedBox(height: 25.h),
-                // Social login buttons (e.g., Facebook and Google)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -212,7 +193,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          // Add Facebook login logic here
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(
@@ -271,7 +251,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                // Don't have an account? Sign up
                 Text.rich(TextSpan(text: "Don't have an account? ", children: [
                   TextSpan(
                     text: "Sign up",
