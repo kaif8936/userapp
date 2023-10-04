@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:userapp/src/providers/auth_provider.dart';
+import 'package:userapp/src/providers/bio_provider.dart';
+import 'package:userapp/src/providers/login_provider.dart';
+import 'package:userapp/src/providers/registration_provider.dart';
 // import 'package:provider/provider.dart';
 import 'package:userapp/src/utils/router.dart';
 
@@ -19,7 +21,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(create: (context) => RegistrationProvider()),
+        ChangeNotifierProvider(create: (context) => BioProvider()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),

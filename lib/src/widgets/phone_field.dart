@@ -23,6 +23,7 @@ class CustomIntlPhoneField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("phone");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

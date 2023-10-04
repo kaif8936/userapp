@@ -2,309 +2,253 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:userapp/src/providers/registration_provider.dart';
 import 'package:userapp/src/utils/app_images.dart';
 import 'package:userapp/src/utils/routes.dart';
 import 'package:userapp/src/widgets/button.dart';
 import 'package:userapp/src/widgets/custom_form_field.dart';
+import 'package:provider/provider.dart';
 
-// ignore: must_be_immutable
-class RegistrationScreen extends StatefulWidget {
+class RegistrationScreen extends StatelessWidget {
   const RegistrationScreen({super.key});
 
   @override
-  State<RegistrationScreen> createState() => _RegistrationScreenState();
-}
-
-class _RegistrationScreenState extends State<RegistrationScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController repeatPasswordController = TextEditingController();
-
-  final _formKey = GlobalKey<FormState>();
-
-  bool isButtonEnabled = false;
-  bool obscureText = false;
-  bool isFocused = false;
-  bool isLoading = false;
-  final FocusNode _imageFocusNode = FocusNode();
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    _imageFocusNode.dispose();
-
-    super.dispose();
-  }
-
-  void _validateForm() {
-    final isEmailValid = emailController.text.isNotEmpty;
-    final isPasswordValid = passwordController.text.length >= 6;
-    final doPasswordsMatch =
-        passwordController.text == repeatPasswordController.text;
-    setState(() {
-      isButtonEnabled = isEmailValid && isPasswordValid && doPasswordsMatch;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    print("Rebuilds");
+    // final registrationProvider =
+    //     Provider.of<RegistrationProvider>(context, listen: false);
+
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: EdgeInsets.all(24.h),
-          child: Form(
-            key: _formKey,
-            onChanged: _validateForm,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    FocusScope.of(context).requestFocus(_imageFocusNode);
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(
-                        milliseconds: 500), // Adjust the duration as needed
-                    // width: isFocused ? 100.0 : 80.0, // Change size when focused
-                    height: isFocused ? 10.0 : 40.0,
-                  ),
-                ),
-
-                // Logo
-                AnimatedContainer(
-                  duration: const Duration(
-                      milliseconds: 500), // Adjust the duration as needed
-                  width: isFocused ? 100.0 : 127.0, // Change size when focused
-                  height: isFocused ? 100.0 : 127.0,
-                  child: Image.asset(
-                    AppImages.splashLogo,
-                  ),
-                ),
-                AnimatedContainer(
-                  duration: const Duration(
-                      milliseconds: 500), // Adjust the duration as needed
-                  // width: isFocused ? 100.0 : 80.0, // Change size when focused
-                  height: isFocused ? 10.0 : 30.0,
-                ),
-                // "Sign in your account" text
-                Text(
-                  'Sign up your account',
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                // Email text field
-                CustomTextFormField(
-                  controller: emailController,
-                  label: 'Email',
-                  hint: 'Placeholder',
-                  onFocusChange: (hasFocus) {
-                    setState(() {
-                      isFocused = hasFocus; // Update focus state
-                    });
-                  },
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        !RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
-                            .hasMatch(value)) {
-                      return 'Please enter your email';
-                    }
-
-                    return null; // Return null if the input is valid
-                  },
-                  onTap: () {},
-                ),
-                const SizedBox(height: 10),
-                // Password text field
-                CustomTextFormField(
-                  controller:
-                      passwordController, // Pass the password controller
-                  obscureText: !obscureText,
-                  label: 'Password',
-                  hint: '**********',
-                  // focusNode: passwordFocusNode,
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        obscureText = !obscureText;
-                      });
-                    },
-                    icon: Icon(
-                      obscureText ? Icons.visibility_off : Icons.visibility,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        !RegExp(r'^.{6,}$').hasMatch(value)) {
-                      return 'Minimum 6 digit password';
-                    }
-                    return null; // Return null if the input is valid
-                  },
-                  onFocusChange: (hasFocus) {
-                    setState(() {
-                      isFocused = hasFocus; // Update focus state
-                    });
-                  },
-                  onTap: () {},
-                  // If this is a password field
-                ),
-                const SizedBox(height: 10),
-                // Password text field
-                CustomTextFormField(
-                  controller:
-                      repeatPasswordController, // Pass the password controller
-                  obscureText: !obscureText,
-                  label: 'Repeat Password',
-                  hint: '**********',
-                  // focusNode: passwordFocusNode,
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        obscureText = !obscureText;
-                      });
-                    },
-                    icon: Icon(
-                      obscureText ? Icons.visibility_off : Icons.visibility,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a password';
-                    } else if (value != passwordController.text) {
-                      return 'Passwords do not match';
-                    } else if (value.length < 6) {
-                      return 'Password should be at least 6 characters';
-                    }
-                    return null; // Return null if the input is valid
-                  },
-                  onFocusChange: (hasFocus) {
-                    setState(() {
-                      isFocused = hasFocus; // Update focus state
-                    });
-                  },
-                  onTap: () {},
-                  // If this is a password field
-                ),
-                SizedBox(height: 27.h),
-                Button(
-                  onTap: () async {
-                    if (_formKey.currentState!.validate()) {
-                      setState(() {
-                        isLoading = true; // Show loading indicator
-                      });
-                      // Delay for 3 seconds
-                      await Future.delayed(const Duration(seconds: 3));
-                      setState(() {
-                        isLoading = false; // Hide the loading indicator
-                      });
-
-                      // Navigate to the "LoginSuccessful" page
-                      // ignore: use_build_context_synchronously
-                      context.push(Routes.registrationSuccessful);
-                    }
-                  },
-                  text: 'NEXT',
-                  enabled: isButtonEnabled,
-                  isLoading: isLoading, // Pass the isLoading property
-                ),
-                SizedBox(height: 25.h),
-                const Text('Or continue with'),
-                SizedBox(height: 25.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        child: Consumer<RegistrationProvider>(
+          builder: (context, registrationProvider, child) {
+            return Padding(
+              padding: EdgeInsets.all(24.h),
+              child: Form(
+                key: registrationProvider.formKey,
+                onChanged: registrationProvider.validateForm,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16.sp),
-                        border: Border.all(
-                          color: Colors.black
-                              .withOpacity(0.1), // Set the border color to grey
-                          width: 2.0, // Set the border width
-                        ),
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          // Add Facebook login logic here
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 13.h, horizontal: 22.w),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.facebook, color: Colors.black),
-                              SizedBox(width: 8.w),
-                              Text(
-                                'Facebook',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
+                    GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context)
+                            .requestFocus(registrationProvider.imageFocusNode);
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 500),
+                        height: registrationProvider.isFocused ? 10.0 : 40.0,
                       ),
                     ),
-                    const SizedBox(width: 10),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16.sp),
-                        border: Border.all(
-                          color: Colors.black
-                              .withOpacity(0.1), // Set the border color to grey
-                          width: 2.0, // Set the border width
-                        ),
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          // Add Facebook login logic here
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 13.h, horizontal: 22.w),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.facebook, color: Colors.black),
-                              SizedBox(width: 8.w),
-                              Text(
-                                'Google',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 500),
+                      width: registrationProvider.isFocused ? 100.0 : 127.0,
+                      height: registrationProvider.isFocused ? 100.0 : 127.0,
+                      child: Image.asset(
+                        AppImages.splashLogo,
                       ),
                     ),
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 500),
+                      height: registrationProvider.isFocused ? 10.0 : 30.0,
+                    ),
+                    Text(
+                      'Sign up your account',
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    CustomTextFormField(
+                      controller: registrationProvider.emailController,
+                      label: 'Email',
+                      hint: 'Placeholder',
+                      onFocusChange: (hasFocus) {
+                        registrationProvider.isFocused = hasFocus;
+                      },
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            !RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                                .hasMatch(value)) {
+                          return 'Please enter your email';
+                        }
+                        return null;
+                      },
+                      onTap: () {},
+                    ),
+                    const SizedBox(height: 10),
+                    CustomTextFormField(
+                      controller: registrationProvider.passwordController,
+                      obscureText: !registrationProvider.obscureText,
+                      label: 'Password',
+                      hint: '**********',
+                      suffixIcon: IconButton(
+                        onPressed: registrationProvider.toggleObscureText,
+                        icon: Icon(
+                          registrationProvider.obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            !RegExp(r'^.{6,}$').hasMatch(value)) {
+                          return 'Minimum 6 digit password';
+                        }
+                        return null;
+                      },
+                      onFocusChange: (hasFocus) {
+                        registrationProvider.isFocused = hasFocus;
+                      },
+                      onTap: () {},
+                    ),
+                    const SizedBox(height: 10),
+                    CustomTextFormField(
+                      controller: registrationProvider.repeatPasswordController,
+                      obscureText: !registrationProvider.obscureText,
+                      label: 'Repeat Password',
+                      hint: '**********',
+                      suffixIcon: IconButton(
+                        onPressed: registrationProvider.toggleObscureText,
+                        icon: Icon(
+                          registrationProvider.obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a password';
+                        } else if (value !=
+                            registrationProvider.passwordController.text) {
+                          return 'Passwords do not match';
+                        } else if (value.length < 6) {
+                          return 'Password should be at least 6 characters';
+                        }
+                        return null;
+                      },
+                      onFocusChange: (hasFocus) {
+                        registrationProvider.isFocused = hasFocus;
+                      },
+                      onTap: () {},
+                    ),
+                    SizedBox(height: 27.h),
+                    Button(
+                      onTap: () async {
+                        if (registrationProvider.formKey.currentState!
+                            .validate()) {
+                          await registrationProvider.login();
+                          if (registrationProvider.isLoading) {
+                            // Show loading indicator
+                          } else {
+                            // ignore: use_build_context_synchronously
+                            context.push(Routes.registrationSuccessful);
+                          }
+                        }
+                      },
+                      text: 'SIGN IN',
+                      enabled: registrationProvider.isButtonEnabled,
+                      isLoading: registrationProvider.isLoading,
+                    ),
+                    SizedBox(height: 25.h),
+                    const Text('Or continue with'),
+                    SizedBox(height: 25.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16.sp),
+                            border: Border.all(
+                              color: Colors.black.withOpacity(0.1),
+                              width: 2.0,
+                            ),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              // Add Facebook login logic here
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 13.h, horizontal: 22.w),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.facebook,
+                                      color: Colors.black),
+                                  SizedBox(width: 8.w),
+                                  Text(
+                                    'Facebook',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16.sp),
+                            border: Border.all(
+                              color: Colors.black.withOpacity(0.1),
+                              width: 2.0,
+                            ),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              // Add Google login logic here
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 13.h, horizontal: 22.w),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.facebook,
+                                      color: Colors.black),
+                                  SizedBox(width: 8.w),
+                                  Text(
+                                    'Google',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Text.rich(
+                        TextSpan(text: "Don't have an account? ", children: [
+                      TextSpan(
+                        text: "Sign in",
+                        style: const TextStyle(
+                          color: Colors.blue,
+                        ),
+                        recognizer: TapGestureRecognizer()..onTap = () {},
+                      ),
+                    ]))
                   ],
                 ),
-                const SizedBox(height: 20),
-                // Don't have an account? Sign up
-                Text.rich(TextSpan(text: "Don't have an account? ", children: [
-                  TextSpan(
-                    text: "Sign in",
-                    style: const TextStyle(
-                      color: Colors.blue,
-                    ),
-                    recognizer: TapGestureRecognizer()..onTap = () {},
-                  ),
-                ]))
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

@@ -9,7 +9,7 @@ import 'package:userapp/src/screens/splash/splash_screen.dart';
 import 'package:userapp/src/utils/routes.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.registrationSuccessful,
+  initialLocation: Routes.loginSuccessful,
   routes: [
     GoRoute(
       path: Routes.initial,
