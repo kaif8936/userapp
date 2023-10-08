@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:userapp/src/utils/app_colors.dart';
 
-enum ButtonType { primary, secondary }
+enum ButtonType { primary, secondary, small }
 
 class Button extends StatelessWidget {
   final VoidCallback onTap;
@@ -29,6 +29,7 @@ class Button extends StatelessWidget {
           : switch (buttonType) {
               ButtonType.primary => primary(),
               ButtonType.secondary => secondary(),
+              ButtonType.small => small(),
             },
     );
   }
@@ -138,6 +139,53 @@ class Button extends StatelessWidget {
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget small() {
+    return Container(
+      height: 60.h,
+      width: 243.w,
+      decoration: BoxDecoration(
+        color: const Color(0XFF0D5EF9),
+        borderRadius: BorderRadius.circular(16.r),
+        boxShadow: const [],
+      ),
+      child: Material(
+        color: const Color(0XFF0D5EF9),
+        borderRadius: BorderRadius.circular(16.r),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16.r),
+          splashColor: AppColors.btnRipple,
+          onTap: () {
+            if (enabled && !isLoading) onTap();
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+            decoration: BoxDecoration(
+              // color: const Color(0XFF0D5EF9),
+              borderRadius: BorderRadius.circular(16.r),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x330D5EF9), // Shadow color
+                  spreadRadius: -24, // Spread radius
+                  blurRadius: 32, // Blur radius
+                  offset: Offset(0, 20), // Offset
+                ),
+              ],
+            ),
+            child: Center(
+              child: Text(
+                text,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
             ),

@@ -9,10 +9,8 @@ class LoginSuccessful extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leadingWidth: 90.w,
-        toolbarHeight: 85.h,
         leading: Padding(
-          padding: EdgeInsets.only(left: 24.sp, top: 12.sp, bottom: 12.sp),
+          padding: EdgeInsets.all(7.sp),
           child: const CustomBackButton(),
         ),
         title: Text(
@@ -20,8 +18,8 @@ class LoginSuccessful extends StatelessWidget {
           style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
         ),
       ),
-      body: const Center(
-        child: Text("Log-in Successful"),
+      body: Container(
+        color: Colors.amber,
       ),
     );
   }

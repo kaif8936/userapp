@@ -26,8 +26,8 @@ class CustomBackButton extends StatelessWidget {
               BoxShadow(
                 color: Color(0x1a0D5EF9),
                 spreadRadius: -4,
-                blurRadius: 10,
-                offset: Offset(0, 7), // Change the shadow offset as needed
+                blurRadius: 15,
+                offset: Offset(0, 10), // Change the shadow offset as needed
               ),
             ],
           ),

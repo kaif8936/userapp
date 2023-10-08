@@ -4,12 +4,13 @@ import 'package:userapp/src/screens/auth/login.dart';
 import 'package:userapp/src/screens/auth/login_successful.dart';
 import 'package:userapp/src/screens/auth/registration.dart';
 import 'package:userapp/src/screens/auth/bio.dart';
+import 'package:userapp/src/screens/home/home.dart';
 import 'package:userapp/src/screens/introduction/introduction_screen.dart';
 import 'package:userapp/src/screens/splash/splash_screen.dart';
 import 'package:userapp/src/utils/routes.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.loginSuccessful,
+  initialLocation: Routes.home,
   routes: [
     GoRoute(
       path: Routes.initial,
@@ -22,12 +23,16 @@ final router = GoRouter(
     GoRoute(
       path: Routes.login,
       builder: (context, state) => const LoginScreen(),
-      routes: [
-        GoRoute(
-          path: Routes.loginSuccessful,
-          builder: (context, state) => const LoginSuccessful(),
-        ),
+      routes: const [
+        // GoRoute(
+        //   path: Routes.loginSuccessful,
+        //   builder: (context, state) => const LoginSuccessful(),
+        // ),
       ],
+    ),
+    GoRoute(
+      path: Routes.loginSuccessful,
+      builder: (context, state) => const LoginSuccessful(),
     ),
     GoRoute(
       path: Routes.bioScreen,
@@ -50,6 +55,10 @@ final router = GoRouter(
     GoRoute(
       path: Routes.registrationSuccessful,
       builder: (context, state) => const RegistrationSuccesful(),
+    ),
+    GoRoute(
+      path: Routes.home,
+      builder: (context, state) => const HomeScreen(),
     ),
   ],
 );

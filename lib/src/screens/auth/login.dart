@@ -12,7 +12,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("object");
+    // print("object");
     // final authProvider = Provider.of<LoginProvider>(context, listen: false);
 
     return Scaffold(

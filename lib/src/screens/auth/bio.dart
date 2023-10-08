@@ -16,7 +16,7 @@ class BioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Rebuild");
+    // print("Rebuild");
     // final bioProvider = Provider.of<BioProvider>(context, listen: false);
 
     const initialCountryCode = 'IN';

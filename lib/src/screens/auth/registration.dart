@@ -14,7 +14,7 @@ class RegistrationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Rebuilds");
+    // print("Rebuilds");
     // final registrationProvider =
     //     Provider.of<RegistrationProvider>(context, listen: false);
 
