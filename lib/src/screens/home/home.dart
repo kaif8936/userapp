@@ -1,7 +1,7 @@
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:userapp/src/screens/home/cart_page.dart';
+import 'package:userapp/src/screens/cart/cart_page.dart';
 import 'package:userapp/src/screens/home/chats_page.dart';
 import 'package:userapp/src/screens/home/home_page.dart';
 import 'package:userapp/src/screens/home/user_page.dart';
