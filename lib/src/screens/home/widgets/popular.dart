@@ -114,7 +114,7 @@ class _PopularDishesListState extends State<PopularDishesList> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        CartManager.addToCart(dish);
+                        CartManager.addToCart(dish.id);
                         const snackBar = SnackBar(
                           backgroundColor: Color(0xff0D5EF9),
                           content: Row(
@@ -203,4 +203,3 @@ class _PopularDishesListState extends State<PopularDishesList> {
   }
 }
 
-// ...

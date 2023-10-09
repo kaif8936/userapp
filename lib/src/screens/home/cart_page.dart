@@ -13,22 +13,30 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   // Local state to manage quantities
-  Map<Dish, int> cartItems = {};
+  Map<String, int> cartItems = {};
   double totalPrice = 0.0;
+  List<MealCategory> availableDishes = [
+    italianCategory,
+    mexicanCategory,
+    indianCategory,
+    dessertCategory,
+    vegetarianCategory,
+    meatsCategory,
+  ];
 
   @override
   void initState() {
     super.initState();
     // Initialize local state with data from CartManager
     cartItems = CartManager.getCartItems();
-    totalPrice = CartManager.calculateTotalPrice();
+    totalPrice = CartManager.calculateTotalPrice(availableDishes);
   }
 
   // Function to update the quantity for a specific item
-  void updateQuantity(Dish item, int newQuantity) {
+  void updateQuantity(String dishId, int newQuantity) {
     if (newQuantity <= 0) {
       // Remove the item from the cart if the new quantity is zero or less
-      CartManager.removeFromCart(item);
+      CartManager.removeFromCart(dishId);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Item removed from cart.'),
@@ -36,12 +44,12 @@ class _CartPageState extends State<CartPage> {
         ),
       );
       setState(() {
-        cartItems.remove(item);
+        cartItems.remove(dishId);
       });
     } else {
       setState(() {
-        cartItems[item] = newQuantity;
-        totalPrice = CartManager.calculateTotalPrice();
+        cartItems[dishId] = newQuantity;
+        totalPrice = CartManager.calculateTotalPrice(availableDishes);
       });
     }
   }
@@ -72,8 +80,20 @@ class _CartPageState extends State<CartPage> {
               : Expanded(
                   child: ListView(
                     children: cartItems.entries.map((entry) {
-                      final cartItem = entry.key;
+                      final dishId = entry.key;
                       final quantity = entry.value;
+
+                      final category = availableDishes.firstWhere(
+                        (category) =>
+                            category.dishes.any((dish) => dish.id == dishId),
+                        orElse: () => MealCategory(
+                          title: '',
+                          imageUrl: '',
+                          dishes: [],
+                        ),
+                      );
+                      final cartItem = category.dishes
+                          .firstWhere((dish) => dish.id == dishId);
 
                       return Container(
                         padding: EdgeInsets.symmetric(
@@ -126,8 +146,6 @@ class _CartPageState extends State<CartPage> {
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Text('Price: \$${cartItem.price.toStringAsFixed(2)}'),
-                              // Text('$quantity'),
                               Text(
                                 'Price: \$${(cartItem.price * quantity).toStringAsFixed(2)}',
                                 style: TextStyle(
@@ -146,9 +164,9 @@ class _CartPageState extends State<CartPage> {
                                     : Icons.remove),
                                 onPressed: () {
                                   if (quantity > 1) {
-                                    updateQuantity(cartItem, quantity - 1);
+                                    updateQuantity(dishId, quantity - 1);
                                   } else {
-                                    updateQuantity(cartItem, 0);
+                                    updateQuantity(dishId, 0);
                                   }
                                 },
                               ),
@@ -163,13 +181,7 @@ class _CartPageState extends State<CartPage> {
                               IconButton(
                                 icon: const Icon(Icons.add),
                                 onPressed: () {
-                                  updateQuantity(cartItem, quantity + 1);
-                                  // ScaffoldMessenger.of(context).showSnackBar(
-                                  //   const SnackBar(
-                                  //     content: Text('Item added to cart.'),
-                                  //     duration: Duration(seconds: 2),
-                                  //   ),
-                                  // );
+                                  updateQuantity(dishId, quantity + 1);
                                 },
                               ),
                             ],

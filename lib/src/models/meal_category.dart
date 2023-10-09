@@ -3,12 +3,12 @@ class Dish {
   final String subTitle;
   final double price;
   final String imageUrl;
-  // final String id;
+  final String id;
   bool isFavorite;
   bool isPopular;
 
   Dish({
-    // required this.id,
+    required this.id,
     required this.title,
     required this.subTitle,
     required this.price,
@@ -41,7 +41,7 @@ final italianCategory = MealCategory(
       price: 12.99,
       imageUrl:
           'https://images.pexels.com/photos/4518844/pexels-photo-4518844.jpeg?auto=compress&cs=tinysrgb&w=600',
-      // id: '1',
+      id: '1',
     ),
     Dish(
       title: 'Margherita Pizza',
@@ -50,7 +50,7 @@ final italianCategory = MealCategory(
       imageUrl:
           'https://images.pexels.com/photos/18431672/pexels-photo-18431672/free-photo-of-sourdough-pizza-time.jpeg?auto=compress&cs=tinysrgb&w=600',
       isPopular: true,
-      // id: '2',
+      id: '2',
     ),
   ],
 );
@@ -66,7 +66,7 @@ final mexicanCategory = MealCategory(
       price: 9.99,
       imageUrl:
           'https://images.pexels.com/photos/3642718/pexels-photo-3642718.jpeg?auto=compress&cs=tinysrgb&w=600',
-      // id: '3',
+      id: '3',
     ),
     Dish(
       title: 'Guacamole',
@@ -74,7 +74,7 @@ final mexicanCategory = MealCategory(
       price: 5.99,
       imageUrl:
           'https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=600',
-      // id: '4',
+      id: '4',
     ),
     // Add more Mexican dishes here
   ],
@@ -92,7 +92,7 @@ final indianCategory = MealCategory(
       imageUrl:
           'https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=600',
       isPopular: true,
-      // id: '5',
+      id: '5',
     ),
     Dish(
       title: 'Vegetable Biryani',
@@ -100,7 +100,7 @@ final indianCategory = MealCategory(
       price: 11.99,
       imageUrl:
           'https://images.pexels.com/photos/7593230/pexels-photo-7593230.jpeg?auto=compress&cs=tinysrgb&w=600',
-      // id: '6',
+      id: '6',
     ),
     // Add more Indian dishes here
   ],
@@ -117,7 +117,7 @@ final dessertCategory = MealCategory(
       price: 7.99,
       imageUrl:
           'https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600',
-      // id: '7',
+      id: '7',
     ),
     Dish(
       title: 'Cheesecake',
@@ -125,7 +125,7 @@ final dessertCategory = MealCategory(
       price: 8.99,
       imageUrl:
           'https://images.pexels.com/photos/3185509/pexels-photo-3185509.png?auto=compress&cs=tinysrgb&w=600',
-      // id: '8',
+      id: '8',
     ),
     // Add more dessert dishes here
   ],
@@ -143,7 +143,7 @@ final vegetarianCategory = MealCategory(
       imageUrl:
           'https://images.pexels.com/photos/15913452/pexels-photo-15913452/free-photo-of-poke-bowl-with-salmon.jpeg?auto=compress&cs=tinysrgb&w=600',
       isPopular: true,
-      // id: '9',
+      id: '9',
     ),
     Dish(
       title: 'Caprese Salad',
@@ -151,7 +151,7 @@ final vegetarianCategory = MealCategory(
       price: 9.99,
       imageUrl:
           'https://images.pexels.com/photos/13241857/pexels-photo-13241857.jpeg?auto=compress&cs=tinysrgb&w=600',
-      // id: '10',
+      id: '10',
     ),
     // Add more vegetarian dishes here
   ],
@@ -168,7 +168,7 @@ final meatsCategory = MealCategory(
       price: 16.99,
       imageUrl:
           'https://images.pexels.com/photos/769289/pexels-photo-769289.jpeg?auto=compress&cs=tinysrgb&w=600',
-      // id: '11',
+      id: '11',
     ),
     Dish(
       title: 'BBQ Ribs',
@@ -176,7 +176,7 @@ final meatsCategory = MealCategory(
       price: 13.99,
       imageUrl:
           'https://images.pexels.com/photos/410648/pexels-photo-410648.jpeg?auto=compress&cs=tinysrgb&w=600',
-      // id: '12',
+      id: '12',
     ),
     // Add more meat dishes here
   ],

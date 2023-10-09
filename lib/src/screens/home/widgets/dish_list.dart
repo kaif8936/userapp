@@ -5,14 +5,13 @@ import 'package:userapp/src/models/meal_category.dart';
 import 'package:userapp/src/screens/home/cart_manager.dart';
 
 class CategoryDishesList extends StatefulWidget {
-  
   final MealCategory category;
 
   const CategoryDishesList({
     super.key,
     required this.category,
   });
-  
+
   @override
   State<CategoryDishesList> createState() => _CategoryDishesListState();
 }
@@ -110,7 +109,7 @@ class _CategoryDishesListState extends State<CategoryDishesList> {
                     ),
                     GestureDetector(
                       onTap: () {
-                         CartManager.addToCart(dish);
+                        CartManager.addToCart(dish.id);
                         const snackBar = SnackBar(
                           backgroundColor: Color(0xff0D5EF9),
                           content: Row(
