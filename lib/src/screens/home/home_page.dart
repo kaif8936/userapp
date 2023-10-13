@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:userapp/src/models/meal_category.dart';
 import 'package:userapp/src/screens/home/widgets/category_list.dart';
 import 'package:userapp/src/screens/home/widgets/dish_list.dart';
 import 'package:userapp/src/screens/home/widgets/offers_page.dart';
 import 'package:userapp/src/screens/home/widgets/popular.dart';
-import 'package:userapp/src/screens/home/widgets/search_bar.dart';
+import 'package:userapp/src/screens/home/widgets/search_heading.dart';
+import 'package:userapp/src/utils/routes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -40,7 +42,18 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CustomSearchBar(),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        context.push(Routes.searchPage);
+                      },
+                      child: const SearchHeading(),
+                    ),
+                  ),
+                  
+                  SizedBox(
+                    width: 10.w,
+                  ),
                   Container(
                     width: 54.w,
                     height: 54.h,
@@ -79,7 +92,6 @@ class _HomePageState extends State<HomePage> {
             ),
 
             SizedBox(height: 5.h), // Adjust spacing as needed
-            // Show CategoryDishesList for the selected category
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

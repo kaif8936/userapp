@@ -15,9 +15,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0; // Index of the selected tab
+  int _selectedIndex = 0;
 
-  // Define the screens for each tab here
   final List<Widget> _screens = [
     const HomePage(),
     const CartPage(),
@@ -36,12 +35,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: _screens[_selectedIndex]), // Display the selected screen
+          child: _screens[_selectedIndex]), 
       bottomNavigationBar: FlashyTabBar(
         iconSize: 30,
         showElevation: false,
-        selectedIndex: _selectedIndex, // Current selected tab index
-        onItemSelected: _onTabSelected, // Function to handle tab selection
+        selectedIndex: _selectedIndex,
+        onItemSelected: _onTabSelected, 
         items: [
           FlashyTabBarItem(
             icon: const Icon(BoxIcons.bx_home),

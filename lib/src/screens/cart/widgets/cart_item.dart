@@ -81,6 +81,7 @@ class CartItem extends StatelessWidget {
             if (quantity > 1) {
               updateQuantity(quantity - 1);
             } else {
+              cartItem.isItemAdded = !cartItem.isItemAdded;
               showDeleteConfirmationDialog(context, cartItem.title, () {
                 updateQuantity(0);
               });

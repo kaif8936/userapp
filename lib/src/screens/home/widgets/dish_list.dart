@@ -17,11 +17,11 @@ class CategoryDishesList extends StatefulWidget {
 }
 
 class _CategoryDishesListState extends State<CategoryDishesList> {
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      // color: Colors.amber,
-      height: 250.h, // Adjust the height as needed
+      height: 250.h,
       child: ListView.separated(
         clipBehavior: Clip.none,
         separatorBuilder: (BuildContext context, int index) => SizedBox(
@@ -108,80 +108,120 @@ class _CategoryDishesListState extends State<CategoryDishesList> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        CartManager.addToCart(dish.id);
-                        const snackBar = SnackBar(
-                          backgroundColor: Color(0xff0D5EF9),
-                          content: Row(
-                            children: [
-                              Text('Item added to cart'),
-                              SizedBox(
-                                width: 3,
-                              ),
-                              Icon(
-                                BoxIcons.bx_cart_add,
-                                color: Colors.white,
-                              ),
-                            ],
-                          ),
-                          duration: Duration(
-                              seconds:
-                                  2), // You can adjust the duration as needed
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      },
-                      child: Container(
-                        height: 50.h,
-                        decoration: BoxDecoration(
-                          color: const Color(0xff0D5EF9),
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(16.sp),
-                            bottomRight: Radius.circular(16.sp),
-                          ),
-                        ),
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                BoxIcons.bx_cart_add,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 3.w,
-                              ),
-                              Text(
-                                'ADD TO CART',
-                                style: TextStyle(
-                                    fontSize: 10.sp, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                        onTap: dish.isItemAdded
+                            ? () {}
+                            : () {
+                                setState(
+                                  () {
+                                    dish.isItemAdded = !dish.isItemAdded;
+                                  },
+                                );
+                                CartManager.addToCart(dish.id);
+                                const snackBar = SnackBar(
+                                  backgroundColor: Color(0xff0D5EF9),
+                                  content: Row(
+                                    children: [
+                                      Text('Item added to cart'),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Icon(
+                                        BoxIcons.bx_cart_add,
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
+                                  duration: Duration(
+                                      seconds:
+                                          2), 
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              },
+                        child: dish.isItemAdded
+                            ? Container(
+                                height: 50.h,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xff0D5EF9),
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(16.sp),
+                                    bottomRight: Radius.circular(16.sp),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        BoxIcons.bx_check,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(
+                                        width: 3.w,
+                                      ),
+                                      Text(
+                                        'ADDED',
+                                        style: TextStyle(
+                                          fontSize: 10.sp,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                height: 50.h,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xff0D5EF9),
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(16.sp),
+                                    bottomRight: Radius.circular(16.sp),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        BoxIcons.bx_cart_add,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(
+                                        width: 3.w,
+                                      ),
+                                      Text(
+                                        'ADD TO CART',
+                                        style: TextStyle(
+                                            fontSize: 10.sp,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )),
                   ],
                 ),
                 Positioned(
                   top: 10.h,
                   right: 10.w,
-                  child: Container(
-                    width: 34.w,
-                    height: 34.h,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          dish.isFavorite = !dish.isFavorite;
-                        });
-                      },
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        dish.isFavorite = !dish.isFavorite;
+                      });
+                    },
+                    child: Container(
+                      width: 34.w,
+                      height: 34.h,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
                       child: Icon(
                         BoxIcons.bxs_heart, // You can use any heart icon here
                         color: dish.isFavorite ? Colors.red : Colors.grey[200],
-                        size: 20.sp,
+                        size: 20.h,
                       ),
                     ),
                   ),

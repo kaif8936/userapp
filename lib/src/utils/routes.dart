@@ -7,6 +7,8 @@ class Routes {
   static const String bioScreen = '/bio-screen';
   static const String registrationSuccessful = '/registration-succesful';
   static const String home = '/home';
+  static const String favorites = '/favorites';
+  static const String searchPage = '/search-page';
 
   static const String genderSelectionScreen = '/gender-selection-screen';
   static const String phoneVerification = '/phone-verification';

@@ -24,6 +24,7 @@ Future<void> showDeleteConfirmationDialog(BuildContext context, String itemName,
             TextButton(
               child: const Text('Delete'),
               onPressed: () {
+                
                 onDelete();
                 Navigator.of(context).pop();
               },

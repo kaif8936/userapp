@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class Dish {
   final String title;
   final String subTitle;
@@ -6,15 +7,19 @@ class Dish {
   final String id;
   bool isFavorite;
   bool isPopular;
+  bool isItemAdded;
+  double userRating;
 
   Dish({
-    required this.id,
     required this.title,
     required this.subTitle,
     required this.price,
     required this.imageUrl,
+    required this.id,
     this.isFavorite = false,
     this.isPopular = false,
+    this.isItemAdded = false,
+    this.userRating = 0.0,
   });
 }
 
@@ -42,6 +47,8 @@ final italianCategory = MealCategory(
       imageUrl:
           'https://images.pexels.com/photos/4518844/pexels-photo-4518844.jpeg?auto=compress&cs=tinysrgb&w=600',
       id: '1',
+      isFavorite: true,
+      userRating: 4.5,
     ),
     Dish(
       title: 'Margherita Pizza',
@@ -51,6 +58,8 @@ final italianCategory = MealCategory(
           'https://images.pexels.com/photos/18431672/pexels-photo-18431672/free-photo-of-sourdough-pizza-time.jpeg?auto=compress&cs=tinysrgb&w=600',
       isPopular: true,
       id: '2',
+      isFavorite: true,
+      userRating: 3.5,
     ),
   ],
 );
@@ -67,6 +76,8 @@ final mexicanCategory = MealCategory(
       imageUrl:
           'https://images.pexels.com/photos/3642718/pexels-photo-3642718.jpeg?auto=compress&cs=tinysrgb&w=600',
       id: '3',
+      isFavorite: true,
+      userRating: 4.5,
     ),
     Dish(
       title: 'Guacamole',
@@ -75,6 +86,8 @@ final mexicanCategory = MealCategory(
       imageUrl:
           'https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=600',
       id: '4',
+      isFavorite: true,
+      userRating: 4.5,
     ),
     // Add more Mexican dishes here
   ],
@@ -93,6 +106,8 @@ final indianCategory = MealCategory(
           'https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=600',
       isPopular: true,
       id: '5',
+      isFavorite: true,
+      userRating: 4.5,
     ),
     Dish(
       title: 'Vegetable Biryani',
@@ -101,7 +116,10 @@ final indianCategory = MealCategory(
       imageUrl:
           'https://images.pexels.com/photos/7593230/pexels-photo-7593230.jpeg?auto=compress&cs=tinysrgb&w=600',
       id: '6',
+      isPopular: true,
+      userRating: 4.5,
     ),
+    
     // Add more Indian dishes here
   ],
 );
@@ -118,6 +136,7 @@ final dessertCategory = MealCategory(
       imageUrl:
           'https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600',
       id: '7',
+      userRating: 4.5,
     ),
     Dish(
       title: 'Cheesecake',
@@ -126,6 +145,7 @@ final dessertCategory = MealCategory(
       imageUrl:
           'https://images.pexels.com/photos/3185509/pexels-photo-3185509.png?auto=compress&cs=tinysrgb&w=600',
       id: '8',
+      userRating: 4.5,
     ),
     // Add more dessert dishes here
   ],
@@ -144,6 +164,7 @@ final vegetarianCategory = MealCategory(
           'https://images.pexels.com/photos/15913452/pexels-photo-15913452/free-photo-of-poke-bowl-with-salmon.jpeg?auto=compress&cs=tinysrgb&w=600',
       isPopular: true,
       id: '9',
+      userRating: 4.5,
     ),
     Dish(
       title: 'Caprese Salad',
@@ -152,6 +173,7 @@ final vegetarianCategory = MealCategory(
       imageUrl:
           'https://images.pexels.com/photos/13241857/pexels-photo-13241857.jpeg?auto=compress&cs=tinysrgb&w=600',
       id: '10',
+      userRating: 4.5,
     ),
     // Add more vegetarian dishes here
   ],
@@ -169,6 +191,7 @@ final meatsCategory = MealCategory(
       imageUrl:
           'https://images.pexels.com/photos/769289/pexels-photo-769289.jpeg?auto=compress&cs=tinysrgb&w=600',
       id: '11',
+      userRating: 4.5,
     ),
     Dish(
       title: 'BBQ Ribs',
@@ -177,6 +200,7 @@ final meatsCategory = MealCategory(
       imageUrl:
           'https://images.pexels.com/photos/410648/pexels-photo-410648.jpeg?auto=compress&cs=tinysrgb&w=600',
       id: '12',
+      userRating: 4.5,
     ),
     // Add more meat dishes here
   ],

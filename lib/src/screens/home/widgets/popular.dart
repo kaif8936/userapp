@@ -4,8 +4,6 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:userapp/src/models/meal_category.dart';
 import 'package:userapp/src/screens/cart/services/cart_manager.dart';
 
-// ...
-
 class PopularDishesList extends StatefulWidget {
   final List<MealCategory> mealCategories;
 
@@ -26,7 +24,7 @@ class _PopularDishesListState extends State<PopularDishesList> {
         .toList();
 
     return SizedBox(
-      height: 250.h, // Adjust the height as needed
+      height: 250.h,
       child: ListView.separated(
         clipBehavior: Clip.none,
         separatorBuilder: (BuildContext context, int index) => SizedBox(
@@ -129,9 +127,7 @@ class _PopularDishesListState extends State<PopularDishesList> {
                               ),
                             ],
                           ),
-                          duration: Duration(
-                              seconds:
-                                  2), // You can adjust the duration as needed
+                          duration: Duration(seconds: 2),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       },
@@ -181,7 +177,6 @@ class _PopularDishesListState extends State<PopularDishesList> {
                     ),
                     child: GestureDetector(
                       onTap: () {
-                        // Implement your favorite toggle logic here
                         setState(() {
                           dish.isFavorite = !dish.isFavorite;
                         });
@@ -202,4 +197,3 @@ class _PopularDishesListState extends State<PopularDishesList> {
     );
   }
 }
-

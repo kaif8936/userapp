@@ -14,9 +14,7 @@ class RegistrationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print("Rebuilds");
-    // final registrationProvider =
-    //     Provider.of<RegistrationProvider>(context, listen: false);
+  
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -145,7 +143,6 @@ class RegistrationScreen extends StatelessWidget {
                             .validate()) {
                           await registrationProvider.login();
                           if (registrationProvider.isLoading) {
-                            // Show loading indicator
                           } else {
                             // ignore: use_build_context_synchronously
                             context.push(Routes.registrationSuccessful);

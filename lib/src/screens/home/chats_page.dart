@@ -5,7 +5,6 @@ class ChatsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Replace this with your actual Home tab content
     return const Center(child: Text('Chats Tab Content'));
   }
 }
