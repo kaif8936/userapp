@@ -4,7 +4,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:userapp/src/screens/cart/cart_page.dart';
 import 'package:userapp/src/screens/home/chats_page.dart';
 import 'package:userapp/src/screens/home/home_page.dart';
-import 'package:userapp/src/screens/home/user_page.dart';
+import 'package:userapp/src/screens/users/user_tab_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

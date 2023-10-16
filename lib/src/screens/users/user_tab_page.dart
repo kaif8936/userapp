@@ -59,8 +59,7 @@ class UserPage extends StatelessWidget {
               title: const Text(
                 'My Profile',
               ),
-              onTap: () {
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: const Icon(
@@ -79,6 +78,7 @@ class UserPage extends StatelessWidget {
               ),
               title: const Text('My Orders'),
               onTap: () {
+                context.push(Routes.orderStatusPage);
               },
             ),
             ListTile(
@@ -87,8 +87,7 @@ class UserPage extends StatelessWidget {
                 color: Color(0xff0D5EF9),
               ),
               title: const Text('Delivery Address'),
-              onTap: () {
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: const Icon(
@@ -96,8 +95,7 @@ class UserPage extends StatelessWidget {
                 color: Color(0xff0D5EF9),
               ),
               title: const Text('Payment Methods'),
-              onTap: () {
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: const Icon(
@@ -105,8 +103,7 @@ class UserPage extends StatelessWidget {
                 color: Color(0xff0D5EF9),
               ),
               title: const Text('Contact Us'),
-              onTap: () {
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: const Icon(
@@ -114,8 +111,7 @@ class UserPage extends StatelessWidget {
                 color: Color(0xff0D5EF9),
               ),
               title: const Text('Logout'),
-              onTap: () {
-              },
+              onTap: () {},
             ),
           ],
         ),

@@ -10,6 +10,7 @@ import 'package:userapp/src/screens/home/home.dart';
 import 'package:userapp/src/screens/home/search_dishes_page.dart';
 import 'package:userapp/src/screens/introduction/introduction_screen.dart';
 import 'package:userapp/src/screens/splash/splash_screen.dart';
+import 'package:userapp/src/screens/users/order_status.dart';
 import 'package:userapp/src/utils/routes.dart';
 
 final router = GoRouter(
@@ -76,9 +77,13 @@ final router = GoRouter(
         ],
       ),
     ),
-     GoRoute(
+    GoRoute(
       path: Routes.searchPage,
       builder: (context, state) => const SearchDishesPage(),
+    ),
+    GoRoute(
+      path: Routes.orderStatusPage,
+      builder: (context, state) => const OrderStatusPage(),
     ),
   ],
 );

@@ -9,6 +9,7 @@ class SearchDishesPage extends StatefulWidget {
   const SearchDishesPage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _SearchDishesPageState createState() => _SearchDishesPageState();
 }
 
@@ -50,9 +51,10 @@ class _SearchDishesPageState extends State<SearchDishesPage> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 22.w),
               child: CustomSearchBar(
-                onChanged: (query) {
+                onChanged: (newQuery) {
                   setState(() {
-                    displayedDishes = searchDishes(query);
+                    query = newQuery;
+                    displayedDishes = searchDishes(newQuery);
                   });
                 },
               ),
@@ -72,6 +74,7 @@ class _SearchDishesPageState extends State<SearchDishesPage> {
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
+                        color: Colors.grey,
                       ),
                     ),
                   );
@@ -146,8 +149,7 @@ class _SearchDishesPageState extends State<SearchDishesPage> {
                                               mainAxisSize: MainAxisSize.min,
                                               children: <Widget>[
                                                 Text(
-                                                  dish.userRating
-                                                      .toString(),
+                                                  dish.userRating.toString(),
                                                   style: TextStyle(
                                                       color: Colors.white,
                                                       fontWeight:
@@ -159,7 +161,7 @@ class _SearchDishesPageState extends State<SearchDishesPage> {
                                                   Icons.star,
                                                   color: Colors.white,
                                                   size: 14.sp,
-                                                ), 
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -216,9 +218,7 @@ class _SearchDishesPageState extends State<SearchDishesPage> {
                                                 ),
                                               ],
                                             ),
-                                            duration: Duration(
-                                                seconds:
-                                                    2), 
+                                            duration: Duration(seconds: 2),
                                           );
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(snackBar);
@@ -310,8 +310,7 @@ class _SearchDishesPageState extends State<SearchDishesPage> {
                                   color: Colors.white,
                                 ),
                                 child: Icon(
-                                  BoxIcons
-                                      .bxs_heart, 
+                                  BoxIcons.bxs_heart,
                                   color: dish.isFavorite
                                       ? Colors.red
                                       : Colors.grey[200],

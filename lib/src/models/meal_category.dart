@@ -1,4 +1,24 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+enum OrderStatus {
+  process,
+  completed,
+  cancelled,
+}
+
+class Order {
+  final String id; // Unique order ID
+  final List<Dish> dishes; // List of dishes included in the order
+  final OrderStatus orderStatus; // Status of the order
+  final DateTime orderDate; // Date and time when the order was placed
+
+  Order({
+    required this.id,
+    required this.dishes,
+    required this.orderStatus,
+    required this.orderDate,
+  });
+}
+
 class Dish {
   final String title;
   final String subTitle;
@@ -119,7 +139,7 @@ final indianCategory = MealCategory(
       isPopular: true,
       userRating: 4.5,
     ),
-    
+
     // Add more Indian dishes here
   ],
 );
@@ -205,3 +225,24 @@ final meatsCategory = MealCategory(
     // Add more meat dishes here
   ],
 );
+
+final List<Order> dummyOrders = [
+  Order(
+    id: '12345',
+    dishes: [italianCategory.dishes[0], italianCategory.dishes[1]],
+    orderStatus: OrderStatus.cancelled,
+    orderDate: DateTime.now(),
+  ),
+  Order(
+    id: '67890',
+    dishes: [mexicanCategory.dishes[1]],
+    orderStatus: OrderStatus.process,
+    orderDate: DateTime.now(),
+  ),
+  Order(
+    id: '54321',
+    dishes: [italianCategory.dishes[0]],
+    orderStatus: OrderStatus.completed,
+    orderDate: DateTime.now(),
+  ),
+];
