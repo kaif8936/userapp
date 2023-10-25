@@ -40,8 +40,7 @@ dependencies:
   provider: ^6.0.5
 
   #api calls
-  dio: ^4.0.6
-
+  http: ^1.1.0
   #others
   pinput: ^3.0.0
   get_storage: ^2.1.1
@@ -64,6 +63,7 @@ dependencies:
   carousel_slider: ^4.2.1
   cached_network_image: ^3.3.0
   intl: ^0.18.1
+  
 
 dev_dependencies:
   flutter_test:

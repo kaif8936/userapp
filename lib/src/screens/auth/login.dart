@@ -1,9 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:userapp/src/providers/login_provider.dart';
 import 'package:userapp/src/utils/app_images.dart';
+import 'package:userapp/src/utils/routes.dart';
 import 'package:userapp/src/widgets/button.dart';
 import 'package:userapp/src/widgets/custom_form_field.dart';
 
@@ -57,19 +58,20 @@ class LoginScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Icon(Iconsax.home_2),
-                    const Icon(
-                      Iconsax.shopping_bag,
-                      color: Colors.amber,
-                    ),
+                    // const Icon(Iconsax.home_2),
+                    // const Icon(
+                    //   Iconsax.shopping_bag,
+                    //   color: Colors.amber,
+                    // ),
                     const SizedBox(height: 20),
-                    Logo(Logos.google),
-                    // const Icon(Logos.google)),
-                    const Icon(Iconsax.security_user),
-                    const Icon(OctIcons.git_branch_24),
-                    const Icon(LineAwesome.user_cog_solid),
+                    // Logo(Logos.google),
+                    // // const Icon(Logos.google)),
+                    // const Icon(Iconsax.security_user),
+                    // const Icon(OctIcons.git_branch_24),
+                    // const Icon(LineAwesome.user_cog_solid),
                     // const Icon(BoxIcons.shopp),
                     // const Icon(OctIcons.),
+
                     CustomTextFormField(
                       controller: authProvider.emailController,
                       label: 'Email',
@@ -134,7 +136,9 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 25),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push(Routes.registration);
+                      },
                       child: const Text(
                         'Forgot password?',
                         style: TextStyle(
@@ -167,6 +171,7 @@ class LoginScreen extends StatelessWidget {
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 // Navigate to the registration screen
+                                context.push(Routes.emailOtpPage);
                               },
                           ),
                         ],

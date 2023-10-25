@@ -10,6 +10,7 @@ class Routes {
   static const String favorites = '/favorites';
   static const String searchPage = '/search-page';
   static const String orderStatusPage = '/order-status-page';
+  static const String emailOtpPage = '/email-otp-page';
 
   static const String genderSelectionScreen = '/gender-selection-screen';
   static const String phoneVerification = '/phone-verification';

@@ -6,20 +6,25 @@ import 'package:go_router/go_router.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:provider/provider.dart';
 import 'package:userapp/src/providers/registration_provider.dart';
-import 'package:userapp/src/utils/app_colors.dart';
+import 'package:userapp/src/utils/app_images.dart';
 import 'package:userapp/src/utils/routes.dart';
 import 'package:userapp/src/widgets/button.dart';
 import 'package:userapp/src/widgets/custom_form_field.dart';
 import 'package:userapp/src/widgets/phone_field.dart';
 
-class RegistrationScreen extends StatelessWidget {
+class RegistrationDetailsScreen extends StatefulWidget {
   final String email;
-
-  const RegistrationScreen({
+  const RegistrationDetailsScreen({
     Key? key,
     required this.email,
   }) : super(key: key);
 
+  @override
+  State<RegistrationDetailsScreen> createState() =>
+      _RegistrationDetailsScreenState();
+}
+
+class _RegistrationDetailsScreenState extends State<RegistrationDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     const initialCountryCode = 'IN';
@@ -34,11 +39,32 @@ class RegistrationScreen extends StatelessWidget {
               padding: EdgeInsets.all(24.h),
               child: Form(
                 key: registrationProvider.otpFormKey,
-                onChanged: registrationProvider.validateRegisterForm,
+                onChanged: registrationProvider.validateForm,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 30),
+                    GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context)
+                            .requestFocus(registrationProvider.imageFocusNode);
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 500),
+                        height: registrationProvider.isFocused ? 10.0 : 40.0,
+                      ),
+                    ),
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 500),
+                      width: registrationProvider.isFocused ? 100.0 : 127.0,
+                      height: registrationProvider.isFocused ? 100.0 : 127.0,
+                      child: Image.asset(
+                        AppImages.splashLogo,
+                      ),
+                    ),
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 500),
+                      height: registrationProvider.isFocused ? 10.0 : 30.0,
+                    ),
                     Text(
                       'Sign up your account',
                       style: TextStyle(
@@ -47,37 +73,6 @@ class RegistrationScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Email',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: AppColors.txtPrimary,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(height: 10.h),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            color: const Color(0xffF2F2F2),
-                            border: Border.all(
-                              color: Colors.black.withOpacity(0.1),
-                              width: 1.0,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 24.w, vertical: 16.h),
-                            child: Text(email),
-                          ),
-                        ),
-                        SizedBox(height: 10.h),
-                      ],
-                    ),
                     CustomTextFormField(
                       controller: registrationProvider.nameController,
                       label: 'Full Name',
@@ -88,6 +83,7 @@ class RegistrationScreen extends StatelessWidget {
                       onTap: () {},
                     ),
                     const SizedBox(height: 10),
+                    // Text(email),
                     CustomIntlPhoneField(
                       label: 'Phone Number',
                       controller: registrationProvider.numberController,
@@ -103,24 +99,24 @@ class RegistrationScreen extends StatelessWidget {
                       initialCountryCode: initialCountryCode,
                     ),
                     const SizedBox(height: 10),
-                    // CustomTextFormField(
-                    //   controller: registrationProvider.emailController,
-                    //   label: 'Email',
-                    //   hint: 'Placeholder',
-                    //   onFocusChange: (hasFocus) {
-                    //     registrationProvider.isFocused = hasFocus;
-                    //   },
-                    //   validator: (value) {
-                    //     if (value == null ||
-                    //         value.isEmpty ||
-                    //         !RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
-                    //             .hasMatch(value)) {
-                    //       return 'Please enter your email';
-                    //     }
-                    //     return null;
-                    //   },
-                    //   onTap: () {},
-                    // ),
+                    CustomTextFormField(
+                      controller: registrationProvider.emailController,
+                      label: 'Email',
+                      hint: 'Placeholder',
+                      onFocusChange: (hasFocus) {
+                        registrationProvider.isFocused = hasFocus;
+                      },
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            !RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                                .hasMatch(value)) {
+                          return 'Please enter your email';
+                        }
+                        return null;
+                      },
+                      onTap: () {},
+                    ),
                     const SizedBox(height: 10),
                     CustomTextFormField(
                       controller: registrationProvider.passwordController,
@@ -276,15 +272,19 @@ class RegistrationScreen extends StatelessWidget {
                     // ),
                     // const SizedBox(height: 20),
                     Text.rich(
-                        TextSpan(text: "Already have an account? ", children: [
                       TextSpan(
-                        text: "Sign in",
-                        style: const TextStyle(
-                          color: Colors.blue,
-                        ),
-                        recognizer: TapGestureRecognizer()..onTap = () {},
+                        text: "Already have an account? ",
+                        children: [
+                          TextSpan(
+                            text: "Sign in",
+                            style: const TextStyle(
+                              color: Colors.blue,
+                            ),
+                            recognizer: TapGestureRecognizer()..onTap = () {},
+                          ),
+                        ],
                       ),
-                    ]))
+                    ),
                   ],
                 ),
               ),

@@ -1,9 +1,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:userapp/src/models/meal_category.dart';
+import 'package:userapp/src/screens/auth/email_otp.dart';
 import 'package:userapp/src/screens/auth/registration_successful.dart';
 import 'package:userapp/src/screens/auth/login.dart';
 import 'package:userapp/src/screens/auth/login_successful.dart';
-import 'package:userapp/src/screens/auth/registration.dart';
 import 'package:userapp/src/screens/auth/bio.dart';
 import 'package:userapp/src/screens/favourites/favorite.dart';
 import 'package:userapp/src/screens/home/home.dart';
@@ -14,7 +14,7 @@ import 'package:userapp/src/screens/users/order_status.dart';
 import 'package:userapp/src/utils/routes.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.home,
+  initialLocation: Routes.login,
   routes: [
     GoRoute(
       path: Routes.initial,
@@ -42,16 +42,16 @@ final router = GoRouter(
       path: Routes.bioScreen,
       builder: (context, state) => const BioScreen(),
     ),
-    GoRoute(
-      path: Routes.registration,
-      builder: (context, state) => const RegistrationScreen(),
-      routes: const [
-        // GoRoute(
-        //   path: Routes.registrationSuccessful,
-        //   builder: (context, state) => const RegistrationSuccessfull(),
-        // ),
-      ],
-    ),
+    // GoRoute(
+    //   path: Routes.registration,
+    //   builder: (context, state) => const RegistrationScreen(),
+    //   routes: const [
+    //     // GoRoute(
+    //     //   path: Routes.registrationSuccessful,
+    //     //   builder: (context, state) => const RegistrationSuccessfull(),
+    //     // ),
+    //   ],
+    // ),
     // GoRoute(
     //   path: Routes.genderSelectionScreen,
     //   builder: (context, state) => const GenderSelectionScreen(),
@@ -84,6 +84,10 @@ final router = GoRouter(
     GoRoute(
       path: Routes.orderStatusPage,
       builder: (context, state) => const OrderStatusPage(),
+    ),
+    GoRoute(
+      path: Routes.emailOtpPage,
+      builder: (context, state) => const EmailOtpScreen(),
     ),
   ],
 );
