@@ -1,13 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously, duplicate_ignore, avoid_print
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:provider/provider.dart';
 import 'package:userapp/src/providers/registration_provider.dart';
 import 'package:userapp/src/utils/app_colors.dart';
-import 'package:userapp/src/utils/routes.dart';
 import 'package:userapp/src/widgets/button.dart';
 import 'package:userapp/src/widgets/custom_form_field.dart';
 import 'package:userapp/src/widgets/phone_field.dart';
@@ -95,6 +93,9 @@ class RegistrationScreen extends StatelessWidget {
                         if (phone!.number.length >= country.minLength &&
                             phone.number.length <= country.maxLength) {
                           registrationProvider.selectedPhone = true;
+                          registrationProvider.numberController.text =
+                              phone.completeNumber;
+                          print(registrationProvider.numberController.text);
                         } else {
                           registrationProvider.selectedPhone = false;
                         }
@@ -126,7 +127,7 @@ class RegistrationScreen extends StatelessWidget {
                       controller: registrationProvider.passwordController,
                       obscureText: !registrationProvider.obscureText,
                       label: 'Password',
-                      hint: '**********',
+                      hint: '******',
                       suffixIcon: IconButton(
                         onPressed: registrationProvider.toggleObscureText,
                         icon: Icon(
@@ -154,7 +155,7 @@ class RegistrationScreen extends StatelessWidget {
                       controller: registrationProvider.repeatPasswordController,
                       obscureText: !registrationProvider.obscureText,
                       label: 'Repeat Password',
-                      hint: '**********',
+                      hint: '******',
                       suffixIcon: IconButton(
                         onPressed: registrationProvider.toggleObscureText,
                         icon: Icon(
@@ -185,14 +186,33 @@ class RegistrationScreen extends StatelessWidget {
                       onTap: () async {
                         if (registrationProvider.otpFormKey.currentState!
                             .validate()) {
-                          await registrationProvider.login();
+                          await registrationProvider.registerUser(
+                            registrationProvider.nameController.text,
+                            email, // Use the provided email
+                            registrationProvider.numberController.text,
+                            registrationProvider.passwordController.text,
+                            context,
+                          );
                           if (registrationProvider.isLoading) {
+                            // Handle loading
                           } else {
+                            // Registration successful, navigate to a new screen
                             // ignore: use_build_context_synchronously
-                            context.push(Routes.registrationSuccessful);
+                            // context.push(Routes.registrationSuccessful);
                           }
                         }
                       },
+                      // onTap: () async {
+                      //   if (registrationProvider.otpFormKey.currentState!
+                      //       .validate()) {
+                      //     await registrationProvider.login();
+                      //     if (registrationProvider.isLoading) {
+                      //     } else {
+                      //       // ignore: use_build_context_synchronously
+                      //       context.push(Routes.registrationSuccessful);
+                      //     }
+                      //   }
+                      // },
                       text: 'SIGN UP',
                       enabled: registrationProvider.isButtonEnabled,
                       isLoading: registrationProvider.isLoading,

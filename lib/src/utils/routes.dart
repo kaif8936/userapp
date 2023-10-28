@@ -2,7 +2,8 @@ class Routes {
   static const String initial = '/';
   static const String introduction = '/introduction';
   static const String login = '/login';
-  static const String loginSuccessful = '/login-successful';
+  static const String loginNumber = '/login-number';
+  static const String loginSuccessful = '/number-login-successful';
   static const String registration = '/registration';
   static const String bioScreen = '/bio-screen';
   static const String registrationSuccessful = '/registration-succesful';
@@ -11,6 +12,7 @@ class Routes {
   static const String searchPage = '/search-page';
   static const String orderStatusPage = '/order-status-page';
   static const String emailOtpPage = '/email-otp-page';
+  static const String errorEmailExists = '/error-email-exists-page';
 
   static const String genderSelectionScreen = '/gender-selection-screen';
   static const String phoneVerification = '/phone-verification';

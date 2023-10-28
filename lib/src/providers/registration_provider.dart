@@ -2,9 +2,11 @@
 
 import 'dart:convert';
 import 'dart:math';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:userapp/src/screens/auth/otp_verification.dart';
+import 'package:userapp/src/utils/routes.dart';
 
 class RegistrationProvider extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
@@ -120,6 +122,43 @@ class RegistrationProvider extends ChangeNotifier {
         passwordController.text == repeatPasswordController.text;
     isButtonEnabled =
         isPasswordValid && doPasswordsMatch && isPhone && isNameValid;
+    notifyListeners();
+  }
+
+  Future<void> registerUser(String name, String email, String number,
+      String password, BuildContext context) async {
+    isLoading = true;
+    notifyListeners();
+    const url =
+        'http://ec2-3-7-9-101.ap-south-1.compute.amazonaws.com/app/saveUserDataloginSignUpAPI/api/signup';
+
+    final headers = {'Content-Type': 'application/json'};
+
+    final body = json.encode({
+      'name': name,
+      'number': number,
+      'email': email,
+      'password': password,
+      // Add other fields as needed
+    });
+
+    try {
+      final response =
+          await http.post(Uri.parse(url), headers: headers, body: body);
+      if (response.statusCode == 201) {
+        context.push(Routes.home);
+        // Registration successful
+        print('User registered successfully');
+      } else if (response.statusCode == 400) {
+        print('Email Already Exists ');
+        // Email already exists, navigate to a new page with the message
+        context.push(Routes.errorEmailExists);
+      }
+    } catch (e) {
+      print('Error: $e');
+      // Handle network or other errors
+    }
+    isLoading = false;
     notifyListeners();
   }
 }

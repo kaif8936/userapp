@@ -2,21 +2,26 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl_phone_field/countries.dart';
 import 'package:provider/provider.dart';
 import 'package:userapp/src/providers/login_provider.dart';
 import 'package:userapp/src/utils/app_images.dart';
 import 'package:userapp/src/utils/routes.dart';
 import 'package:userapp/src/widgets/button.dart';
 import 'package:userapp/src/widgets/custom_form_field.dart';
+import 'package:userapp/src/widgets/phone_field.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LoginWithNumberScreen extends StatelessWidget {
+  const LoginWithNumberScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // print("object");
     // final authProvider = Provider.of<LoginProvider>(context, listen: false);
-
+    const initialCountryCode = 'IN';
+    var country =
+        countries.firstWhere((element) => element.code == initialCountryCode);
+    // return const Scaffold();
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -25,8 +30,8 @@ class LoginScreen extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(24),
               child: Form(
-                key: authProvider.formKey,
-                onChanged: authProvider.validateForm,
+                key: authProvider.numberFormKey,
+                onChanged: authProvider.validateNumberForm,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -59,25 +64,54 @@ class LoginScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    // const Icon(Iconsax.home_2),
+                    // const Icon(
+                    //   Iconsax.shopping_bag,
+                    //   color: Colors.amber,
+                    // ),
                     const SizedBox(height: 20),
-                    CustomTextFormField(
-                      controller: authProvider.emailController,
-                      label: 'Email',
-                      hint: 'Placeholder',
-                      onFocusChange: (hasFocus) {
-                        authProvider.isFocused = hasFocus;
-                      },
-                      validator: (value) {
-                        if (value == null ||
-                            value.isEmpty ||
-                            !RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
-                                .hasMatch(value)) {
-                          return 'Please enter your email';
+                    // Logo(Logos.google),
+                    // // const Icon(Logos.google)),
+                    // const Icon(Iconsax.security_user),
+                    // const Icon(OctIcons.git_branch_24),
+                    // const Icon(LineAwesome.user_cog_solid),
+                    // const Icon(BoxIcons.shopp),
+                    // const Icon(OctIcons.),
+                    CustomIntlPhoneField(
+                      label: 'Phone Number',
+                      controller: authProvider.numberController,
+                      onPhoneNumberChanged: (phone) {
+                        if (phone!.number.length >= country.minLength &&
+                            phone.number.length <= country.maxLength) {
+                          authProvider.selectedPhone = true;
+                          authProvider.numberController.text =
+                              phone.completeNumber;
+                          print(authProvider.numberController.text);
+                        } else {
+                          authProvider.selectedPhone = false;
                         }
-                        return null;
+                        authProvider.validateNumberForm();
                       },
-                      onTap: () {},
+                      initialCountryCode: initialCountryCode,
                     ),
+                    // CustomTextFormField(
+                    //   controller: authProvider.emailController,
+                    //   label: 'Email',
+                    //   hint: 'Placeholder',
+                    //   onFocusChange: (hasFocus) {
+                    //     authProvider.isFocused = hasFocus;
+                    //   },
+                    //   validator: (value) {
+                    //     if (value == null ||
+                    //         value.isEmpty ||
+                    //         !RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                    //             .hasMatch(value)) {
+                    //       return 'Please enter your email';
+                    //     }
+                    //     return null;
+                    //   },
+                    //   onTap: () {},
+                    // ),
                     const SizedBox(height: 10),
                     CustomTextFormField(
                       controller: authProvider.passwordController,
@@ -109,10 +143,11 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(height: 27),
                     Button(
                       onTap: () async {
-                        if (authProvider.formKey.currentState!.validate()) {
-                          await authProvider.login(
-                            authProvider
-                                .emailController.text, // Use the provided email
+                        if (authProvider.numberFormKey.currentState!
+                            .validate()) {
+                          await authProvider.loginWithNumber(
+                            authProvider.numberController
+                                .text, // Use the provided email
                             authProvider.passwordController.text,
                             context,
                           );
@@ -141,7 +176,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 25.h),
+                    const SizedBox(height: 25),
                     const Text('Or continue with'),
                     SizedBox(height: 25.h),
                     Row(
@@ -193,8 +228,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                           child: InkWell(
                             onTap: () {
-                              context.push(
-                                  "${Routes.login}/${Routes.loginNumber}");
+                              context.push(Routes.login);
                               // Add Google login logic here
                             },
                             child: Padding(
@@ -202,10 +236,10 @@ class LoginScreen extends StatelessWidget {
                                   vertical: 13.h, horizontal: 22.w),
                               child: Row(
                                 children: [
-                                  const Icon(Icons.phone, color: Colors.black),
+                                  const Icon(Icons.email, color: Colors.black),
                                   SizedBox(width: 8.w),
                                   Text(
-                                    'Phone',
+                                    'Email',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14.sp,

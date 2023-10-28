@@ -89,11 +89,11 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                           await registrationProvider
                               .generateAndSendOTP(context);
                           registrationProvider.isButtonEnabled = false;
-                          if (registrationProvider.isLoading) {
-                          } else {
-                            // ignore: use_build_context_synchronously
-                            // registrationProvider.generateAndSendOTP(context);
-                          }
+                          // if (registrationProvider.isLoading) {
+                          // } else {
+                          //   // ignore: use_build_context_synchronously
+                          //   // registrationProvider.generateAndSendOTP(context);
+                          // }
                         }
                       },
                       text: 'SEND OTP',
