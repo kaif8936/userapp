@@ -181,7 +181,7 @@ class _RegistrationDetailsScreenState extends State<RegistrationDetailsScreen> {
                       onTap: () async {
                         if (registrationProvider.otpFormKey.currentState!
                             .validate()) {
-                          await registrationProvider.login();
+                          // await registrationProvider.login();
                           if (registrationProvider.isLoading) {
                           } else {
                             // ignore: use_build_context_synchronously

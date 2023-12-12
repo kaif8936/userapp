@@ -42,7 +42,7 @@ class LoginWithNumberScreen extends StatelessWidget {
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 500),
-                        height: authProvider.isFocused ? 10.0 : 40.0,
+                        height: authProvider.isFocused ? 10.0 : 20.0,
                       ),
                     ),
                     AnimatedContainer(
@@ -55,7 +55,7 @@ class LoginWithNumberScreen extends StatelessWidget {
                     ),
                     AnimatedContainer(
                       duration: const Duration(milliseconds: 500),
-                      height: authProvider.isFocused ? 10.0 : 30.0,
+                      height: authProvider.isFocused ? 10.0 : 20.0,
                     ),
                     const Text(
                       'Sign in your account',
@@ -64,19 +64,9 @@ class LoginWithNumberScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    // const Icon(Iconsax.home_2),
-                    // const Icon(
-                    //   Iconsax.shopping_bag,
-                    //   color: Colors.amber,
-                    // ),
-                    const SizedBox(height: 20),
-                    // Logo(Logos.google),
-                    // // const Icon(Logos.google)),
-                    // const Icon(Iconsax.security_user),
-                    // const Icon(OctIcons.git_branch_24),
-                    // const Icon(LineAwesome.user_cog_solid),
-                    // const Icon(BoxIcons.shopp),
-                    // const Icon(OctIcons.),
+
+                    SizedBox(height: 20.h),
+
                     CustomIntlPhoneField(
                       label: 'Phone Number',
                       controller: authProvider.numberController,
@@ -86,7 +76,7 @@ class LoginWithNumberScreen extends StatelessWidget {
                           authProvider.selectedPhone = true;
                           authProvider.numberController.text =
                               phone.completeNumber;
-                          print(authProvider.numberController.text);
+                          // print(authProvider.numberController.text);
                         } else {
                           authProvider.selectedPhone = false;
                         }
@@ -112,7 +102,7 @@ class LoginWithNumberScreen extends StatelessWidget {
                     //   },
                     //   onTap: () {},
                     // ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h),
                     CustomTextFormField(
                       controller: authProvider.passwordController,
                       obscureText: !authProvider.obscureText,
@@ -140,7 +130,7 @@ class LoginWithNumberScreen extends StatelessWidget {
                       },
                       onTap: () {},
                     ),
-                    const SizedBox(height: 27),
+                    SizedBox(height: 27.h),
                     Button(
                       onTap: () async {
                         if (authProvider.numberFormKey.currentState!
@@ -162,7 +152,7 @@ class LoginWithNumberScreen extends StatelessWidget {
                       enabled: authProvider.isButtonEnabled,
                       isLoading: authProvider.isLoading,
                     ),
-                    const SizedBox(height: 25),
+                    SizedBox(height: 20.h),
                     TextButton(
                       onPressed: () {
                         context.push(Routes.registration);
@@ -176,8 +166,30 @@ class LoginWithNumberScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 25),
-                    const Text('Or continue with'),
+                    SizedBox(height: 15.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            color: Colors.grey,
+                            height: 1,
+                            // width: 10,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          child: const Text('Or continue with'),
+                        ),
+                        Expanded(
+                          child: Container(
+                            color: Colors.grey,
+                            height: 1,
+                            // width: 10,
+                          ),
+                        ),
+                      ],
+                    ),
                     SizedBox(height: 25.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -228,7 +240,7 @@ class LoginWithNumberScreen extends StatelessWidget {
                           ),
                           child: InkWell(
                             onTap: () {
-                              context.push(Routes.login);
+                              context.pop();
                               // Add Google login logic here
                             },
                             child: Padding(
@@ -253,15 +265,8 @@ class LoginWithNumberScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 25),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Facebook button
-                        // Google button
-                      ],
-                    ),
-                    const SizedBox(height: 20),
+
+                    SizedBox(height: 20.h),
                     Text.rich(
                       TextSpan(
                         text: "Don't have an account? ",
@@ -274,7 +279,7 @@ class LoginWithNumberScreen extends StatelessWidget {
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 // Navigate to the registration screen
-                                context.push(Routes.emailOtpPage);
+                                context.push(Routes.emailRegistrationPage);
                               },
                           ),
                         ],

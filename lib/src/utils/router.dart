@@ -1,10 +1,11 @@
 import 'package:go_router/go_router.dart';
 import 'package:userapp/src/models/meal_category.dart';
-import 'package:userapp/src/screens/auth/email_otp.dart';
+import 'package:userapp/src/screens/auth/bio.dart';
+import 'package:userapp/src/screens/auth/register_with_email.dart';
 import 'package:userapp/src/screens/auth/error_email_exists.dart';
 import 'package:userapp/src/screens/auth/login_with_number.dart';
 import 'package:userapp/src/screens/auth/registration_successful.dart';
-import 'package:userapp/src/screens/auth/login.dart';
+import 'package:userapp/src/screens/auth/login_with_email.dart';
 import 'package:userapp/src/screens/auth/login_successful.dart';
 import 'package:userapp/src/screens/favourites/favorite.dart';
 import 'package:userapp/src/screens/home/home.dart';
@@ -28,12 +29,12 @@ final router = GoRouter(
     GoRoute(
       path: Routes.login,
       builder: (context, state) => const LoginScreen(),
-      routes: const [
-        // GoRoute(
-        //   path: Routes.loginNumber,
-        //   builder: (context, state) => const LoginWithNumberScreen(),
-        // ),
-      ],
+      // routes: const [
+      //   // GoRoute(
+      //   //   path: Routes.loginNumber,
+      //   //   builder: (context, state) => const LoginWithNumberScreen(),
+      //   // ),
+      // ],
     ),
     GoRoute(
       path: Routes.loginNumber,
@@ -43,10 +44,10 @@ final router = GoRouter(
       path: Routes.loginSuccessful,
       builder: (context, state) => const LoginSuccessful(),
     ),
-    // GoRoute(
-    //   path: Routes.bioScreen,
-    //   builder: (context, state) => const BioScreen(),
-    // ),
+    GoRoute(
+      path: Routes.bioScreen,
+      builder: (context, state) => const BioScreen(),
+    ),
     GoRoute(
       path: Routes.errorEmailExists,
       builder: (context, state) => const ErrorEmailExists(),
@@ -95,8 +96,8 @@ final router = GoRouter(
       builder: (context, state) => const OrderStatusPage(),
     ),
     GoRoute(
-      path: Routes.emailOtpPage,
-      builder: (context, state) => const EmailOtpScreen(),
+      path: Routes.emailRegistrationPage,
+      builder: (context, state) => const EmailRegistrationScreen(),
     ),
     // GoRoute(
     //   path: Routes.loginNumber,

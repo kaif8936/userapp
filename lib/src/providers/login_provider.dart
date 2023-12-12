@@ -5,14 +5,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
+import 'package:userapp/src/models/authentication.dart';
 import 'package:userapp/src/utils/routes.dart';
 
 class LoginProvider extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController numberController = TextEditingController();
-  // TextEditingController phoneNumberController = TextEditingController();
-  // TextEditingController phonePasswordController = TextEditingController();
 
   final FocusNode imageFocusNode = FocusNode();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -57,11 +56,12 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> login(
+  Future<void> loginWithEmail(
       String email, String password, BuildContext context) async {
     isLoading = true;
     notifyListeners();
-    const url =
+
+    const apiUrl =
         'http://ec2-3-7-9-101.ap-south-1.compute.amazonaws.com/app/saveUserDataloginSignUpAPI/api/login';
 
     final headers = {'Content-Type': 'application/json'};
@@ -73,13 +73,21 @@ class LoginProvider extends ChangeNotifier {
 
     try {
       final response = await http.post(
-        Uri.parse(url),
+        Uri.parse(apiUrl),
         headers: headers,
         body: body,
       );
+
       if (response.statusCode == 200) {
-        // Login successful, parse the response JSON
+        // Login successful, parse the response using the model factory method
         final Map<String, dynamic> data = json.decode(response.body);
+        // final loginEmailResponse = LoginEmailResponse.fromJson(data);
+
+        // You can access the response data, for example:
+        // final user = loginEmailResponse.user;
+        // final newTokenID = loginEmailResponse.newLoginTokenID;
+
+        // You can now navigate to the home page or perform other actions.
         context.push(Routes.home);
       } else if (response.statusCode == 401) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -87,21 +95,62 @@ class LoginProvider extends ChangeNotifier {
             content: Text('Invalid credentials. Please try again.'),
           ),
         );
-        print('Login failed');
+        // print('Login failed');
       }
     } catch (e) {
-      print('Error: $e');
+      // print('Error: $e');
     }
     isLoading = false;
     notifyListeners();
   }
 
   // --------------
+//   Future<void> loginWithNumber(
+//       String number, String password, BuildContext context) async {
+//     isLoading = true;
+//     notifyListeners();
+//     const url =
+//         'http://ec2-3-7-9-101.ap-south-1.compute.amazonaws.com/app/saveUserDataloginSignUpAPI/api/login-number';
+
+//     final headers = {'Content-Type': 'application/json'};
+
+//     final body = json.encode({
+//       'number': number,
+//       'password': password,
+//     });
+
+//     try {
+//       final response = await http.post(
+//         Uri.parse(url),
+//         headers: headers,
+//         body: body,
+//       );
+//       if (response.statusCode == 200) {
+//         // Login successful, parse the response JSON
+//         final Map<String, dynamic> data = json.decode(response.body);
+//         context.push(Routes.home);
+//       } else if (response.statusCode == 401) {
+//         ScaffoldMessenger.of(context).showSnackBar(
+//           const SnackBar(
+//             content: Text('Invalid Number or Password'),
+//           ),
+//         );
+//         print('Login failed');
+//       }
+//     } catch (e) {
+//       print('Error: $e');
+//     }
+//     isLoading = false;
+//     notifyListeners();
+//   }
+// }
+
   Future<void> loginWithNumber(
       String number, String password, BuildContext context) async {
     isLoading = true;
     notifyListeners();
-    const url =
+
+    const apiUrl =
         'http://ec2-3-7-9-101.ap-south-1.compute.amazonaws.com/app/saveUserDataloginSignUpAPI/api/login-number';
 
     final headers = {'Content-Type': 'application/json'};
@@ -113,24 +162,32 @@ class LoginProvider extends ChangeNotifier {
 
     try {
       final response = await http.post(
-        Uri.parse(url),
+        Uri.parse(apiUrl),
         headers: headers,
         body: body,
       );
+
       if (response.statusCode == 200) {
-        // Login successful, parse the response JSON
+        // Login successful, parse the response using the model factory method
         final Map<String, dynamic> data = json.decode(response.body);
+        // final loginPhoneResponse = LoginPhoneResponse.fromJson(data);
+
+        // You can access the response data, for example:
+        // final user = loginPhoneResponse.user;
+        // final newTokenID = loginPhoneResponse.newLoginTokenID;
+
+        // You can now navigate to the home page or perform other actions.
         context.push(Routes.home);
       } else if (response.statusCode == 401) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Invalid Number or Password'),
+            content: Text('Invalid credentials. Please try again.'),
           ),
         );
-        print('Login failed');
+        // print('Login failed');
       }
     } catch (e) {
-      print('Error: $e');
+      // print('Error: $e');
     }
     isLoading = false;
     notifyListeners();

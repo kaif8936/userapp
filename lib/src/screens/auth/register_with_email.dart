@@ -3,20 +3,23 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:userapp/src/providers/registration_provider.dart';
 import 'package:userapp/src/utils/app_images.dart';
+import 'package:userapp/src/utils/routes.dart';
 import 'package:userapp/src/widgets/button.dart';
 import 'package:userapp/src/widgets/custom_form_field.dart';
 import 'package:provider/provider.dart';
 
-class EmailOtpScreen extends StatefulWidget {
-  const EmailOtpScreen({super.key});
+class EmailRegistrationScreen extends StatefulWidget {
+  const EmailRegistrationScreen({super.key});
 
   @override
-  State<EmailOtpScreen> createState() => _EmailOtpScreenState();
+  State<EmailRegistrationScreen> createState() =>
+      _EmailRegistrationScreenState();
 }
 
-class _EmailOtpScreenState extends State<EmailOtpScreen> {
+class _EmailRegistrationScreenState extends State<EmailRegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,6 +92,7 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                           await registrationProvider
                               .generateAndSendOTP(context);
                           registrationProvider.isButtonEnabled = false;
+                          registrationProvider.isFocused = false;
                           // if (registrationProvider.isLoading) {
                           // } else {
                           //   // ignore: use_build_context_synchronously
@@ -186,7 +190,10 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                         style: const TextStyle(
                           color: Colors.blue,
                         ),
-                        recognizer: TapGestureRecognizer()..onTap = () {},
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            context.pushReplacement(Routes.login);
+                          },
                       ),
                     ]))
                   ],

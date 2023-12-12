@@ -5,7 +5,8 @@ import 'dart:math';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:userapp/src/screens/auth/otp_verification.dart';
+import 'package:userapp/src/models/authentication.dart';
+import 'package:userapp/src/screens/auth/email_otp_verification.dart';
 import 'package:userapp/src/utils/routes.dart';
 
 class RegistrationProvider extends ChangeNotifier {
@@ -23,11 +24,11 @@ class RegistrationProvider extends ChangeNotifier {
   bool isButtonEnabled = false;
   bool obscureText = false;
   bool isLoading = false;
-  bool _isFocused = false; // Private variable to store the focus state
-  bool get isFocused => _isFocused; // Getter for isFocused
+  bool _isFocused = false;
+  bool get isFocused => _isFocused;
 
   set isFocused(bool value) {
-    _isFocused = value; // Setter for isFocused
+    _isFocused = value;
     notifyListeners();
   }
 
@@ -50,14 +51,6 @@ class RegistrationProvider extends ChangeNotifier {
 
   void toggleObscureText() {
     obscureText = !obscureText;
-    notifyListeners();
-  }
-
-  Future<void> login() async {
-    isLoading = true;
-    notifyListeners();
-    await Future.delayed(const Duration(seconds: 3));
-    isLoading = false;
     notifyListeners();
   }
 
@@ -106,6 +99,54 @@ class RegistrationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+///////////////
+  Future<void> generateAndReSendOTP(BuildContext context) async {
+    isLoading = true;
+    notifyListeners();
+
+    final random = Random();
+    final otp = (10000 + random.nextInt(90000)).toString();
+    const apiUrl =
+        "http://ec2-3-7-9-101.ap-south-1.compute.amazonaws.com/app6/sendSignUpOTPMail";
+    final email = emailOtpController.text;
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode({"email": email, "otp": otp}),
+    );
+
+    if (response.statusCode == 200) {
+      generatedOTP = otp;
+      notifyListeners();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('OTP Resent'),
+        ),
+      );
+      // OTPVerificationScreen(otp, email);
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => OTPVerificationScreen(otp, email),
+      //   ),
+      // );
+    } else {
+      final errorResponse = jsonDecode(response.body);
+      final errorMessage = errorResponse['error'];
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage),
+        ),
+      );
+    }
+
+    isLoading = false;
+    notifyListeners();
+  }
+
   void validateEmailForm() {
     // final isEmailValid = emailOtpController.text.isNotEmpty;
     final isEmailValid = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
@@ -129,7 +170,8 @@ class RegistrationProvider extends ChangeNotifier {
       String password, BuildContext context) async {
     isLoading = true;
     notifyListeners();
-    const url =
+
+    const apiUrl =
         'http://ec2-3-7-9-101.ap-south-1.compute.amazonaws.com/app/saveUserDataloginSignUpAPI/api/signup';
 
     final headers = {'Content-Type': 'application/json'};
@@ -139,23 +181,27 @@ class RegistrationProvider extends ChangeNotifier {
       'number': number,
       'email': email,
       'password': password,
-      // Add other fields as needed
     });
 
     try {
       final response =
-          await http.post(Uri.parse(url), headers: headers, body: body);
+          await http.post(Uri.parse(apiUrl), headers: headers, body: body);
       if (response.statusCode == 201) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        // final signupResponse = SignupResponse.fromJson(data);
+
+        // final loginTokenID = signupResponse.loginTokenID;
+
         context.push(Routes.home);
         // Registration successful
-        print('User registered successfully');
+        // print('User registered successfully');
       } else if (response.statusCode == 400) {
-        print('Email Already Exists ');
+        // print('Email Already Exists ');
         // Email already exists, navigate to a new page with the message
         context.push(Routes.errorEmailExists);
       }
     } catch (e) {
-      print('Error: $e');
+      // print('Error: $e');
       // Handle network or other errors
     }
     isLoading = false;

@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
         child: Consumer<LoginProvider>(
           builder: (context, authProvider, child) {
             return Padding(
-              padding: const EdgeInsets.all(24),
+              padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 24.w),
               child: Form(
                 key: authProvider.formKey,
                 onChanged: authProvider.validateForm,
@@ -37,7 +37,7 @@ class LoginScreen extends StatelessWidget {
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 500),
-                        height: authProvider.isFocused ? 10.0 : 40.0,
+                        height: authProvider.isFocused ? 10.0 : 25.0,
                       ),
                     ),
                     AnimatedContainer(
@@ -50,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     AnimatedContainer(
                       duration: const Duration(milliseconds: 500),
-                      height: authProvider.isFocused ? 10.0 : 30.0,
+                      height: authProvider.isFocused ? 10.0 : 25.0,
                     ),
                     const Text(
                       'Sign in your account',
@@ -59,7 +59,7 @@ class LoginScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     CustomTextFormField(
                       controller: authProvider.emailController,
                       label: 'Email',
@@ -78,7 +78,7 @@ class LoginScreen extends StatelessWidget {
                       },
                       onTap: () {},
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h),
                     CustomTextFormField(
                       controller: authProvider.passwordController,
                       obscureText: !authProvider.obscureText,
@@ -106,11 +106,11 @@ class LoginScreen extends StatelessWidget {
                       },
                       onTap: () {},
                     ),
-                    const SizedBox(height: 27),
+                    SizedBox(height: 27.h),
                     Button(
                       onTap: () async {
                         if (authProvider.formKey.currentState!.validate()) {
-                          await authProvider.login(
+                          await authProvider.loginWithEmail(
                             authProvider
                                 .emailController.text, // Use the provided email
                             authProvider.passwordController.text,
@@ -127,7 +127,7 @@ class LoginScreen extends StatelessWidget {
                       enabled: authProvider.isButtonEnabled,
                       isLoading: authProvider.isLoading,
                     ),
-                    const SizedBox(height: 25),
+                    SizedBox(height: 20.h),
                     TextButton(
                       onPressed: () {
                         context.push(Routes.registration);
@@ -141,8 +141,31 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 25.h),
-                    const Text('Or continue with'),
+                    SizedBox(height: 15.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            color: Colors.grey,
+                            height: 1,
+                            // width: 10,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          child: const Text('Or continue with'),
+                        ),
+                        Expanded(
+                          child: Container(
+                            color: Colors.grey,
+                            height: 1,
+                            // width: 10,
+                          ),
+                        ),
+                      ],
+                    ),
+                    // const Text('Or continue with'),
                     SizedBox(height: 25.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -181,7 +204,6 @@ class LoginScreen extends StatelessWidget {
                         //     ),
                         //   ),
                         // ),
-                        // const SizedBox(width: 10),
                         Container(
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -193,9 +215,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                           child: InkWell(
                             onTap: () {
-                              context.push(
-                                  "${Routes.login}/${Routes.loginNumber}");
-                              // Add Google login logic here
+                              context.push(Routes.loginNumber);
                             },
                             child: Padding(
                               padding: EdgeInsets.symmetric(
@@ -219,15 +239,8 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 25),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Facebook button
-                        // Google button
-                      ],
-                    ),
-                    const SizedBox(height: 20),
+                    
+                    SizedBox(height: 20.h),
                     Text.rich(
                       TextSpan(
                         text: "Don't have an account? ",
@@ -240,7 +253,8 @@ class LoginScreen extends StatelessWidget {
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 // Navigate to the registration screen
-                                context.push(Routes.emailOtpPage);
+                                context.pushReplacement(
+                                    Routes.emailRegistrationPage);
                               },
                           ),
                         ],
